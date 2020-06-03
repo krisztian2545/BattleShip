@@ -15,7 +15,8 @@ namespace Model
 
         public static Ship[] GenerateShips()
         {
-            return new int[10, 10];
+            // randomization
+            return new Ship[ NUMBER_OF_SHIPS ];
         }
 
     }

@@ -11,10 +11,10 @@ namespace Model
         public string Name { get; }
         public Ship[] Ships { get; }
         private int[,] _myTerritory;
-        private int[,] _enenmyTerritory;
-        private Vector LastShot;
+        public int[,] _enenmyTerritory { get; private set; }
+        private Vector TargetCoordinates;
 
-        //private const int NUMBER_OF_SHIPS = 5;
+        public const int NUMBER_OF_SHIPS = 5; // this is also static
 
         public Player(string name, Ship[] newShips)
         {
@@ -30,7 +30,15 @@ namespace Model
 
         }
 
+        public void Shoot(Player enemy)
+        {
 
+        }
+
+        public void AimAt(Vector target)
+        {
+
+        }
 
     }
 }
