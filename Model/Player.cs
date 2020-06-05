@@ -33,7 +33,18 @@ namespace Model
 
         public virtual void Shoot(Player enemy)
         {
+            Logger.Log($"Shooting {enemy.Name}'s ship at {TargetCoordinates.ToString()}");
+            
             // check if it hit the enemy
+            if(enemy.IsHit(TargetCoordinates))
+            {
+                Logger.Log("Hit!");
+
+            } else
+            {
+                Logger.Log("Missed.");
+
+            }
 
             // update upon feedback from the IsHit() function
         }
@@ -42,7 +53,7 @@ namespace Model
         {
             // do a check here or before this to dont shoot twice at a target
             TargetCoordinates = target;
-            Logger.Log("Aiming at " + TargetCoordinates.ToString());
+            Logger.Log(Name + "is aiming at " + TargetCoordinates.ToString());
         }
 
         public bool IsHit(Vector coordinate)

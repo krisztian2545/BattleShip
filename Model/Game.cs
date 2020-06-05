@@ -8,9 +8,14 @@ namespace Model
         private int _halfRound;
         Player[] Players { get; }
 
-        public Game()
+        public Game(Player player1, Player player2)
         {
+            Players = new Player[] { player1, player2 };
+        }
 
+        public void InitGame()
+        {
+            _halfRound = 0;
         }
 
         public void Next()

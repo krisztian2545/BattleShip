@@ -8,7 +8,7 @@ namespace Model
     public class Bot : Player
     {
 
-        public Bot(string name) : base(name, GenerateShips())
+        public Bot(string name) : base($"Bot {name}", GenerateShips())
         {
 
         }
