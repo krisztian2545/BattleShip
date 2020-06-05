@@ -2,7 +2,7 @@
 
 namespace Model
 {
-    class Game
+    public class Game
     {
 
         private int _halfRound;

@@ -5,7 +5,7 @@ using Model.Data;
 
 namespace Model
 {
-    class Bot : Player
+    public class Bot : Player
     {
 
         public Bot(string name) : base(name, GenerateShips())
@@ -17,6 +17,18 @@ namespace Model
         {
             // randomization
             return new Ship[ NUMBER_OF_SHIPS ];
+        }
+
+        public void AutoAim()
+        {
+            Logger.Log("Auto aiming...");
+            AimAt(new Vector(7, 7));
+        }
+
+        public override void Shoot(Player enemy)
+        {
+            AutoAim();
+            base.Shoot(enemy);
         }
 
     }

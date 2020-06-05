@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Model.Data
 {
-    class Ship
+    public class Ship
     {
     }
 }

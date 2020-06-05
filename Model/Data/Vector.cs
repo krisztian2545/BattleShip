@@ -1,6 +1,6 @@
 ﻿namespace Model.Data
 {
-	struct Vector
+	public struct Vector
 	{
 		public static readonly Vector Up = new Vector(0, -1);
 		public static readonly Vector Right = new Vector(1, 0);
@@ -34,7 +34,7 @@
 
 		public override string ToString()
 		{
-			return "[" + X + ", " + Y + "]";
+			return $"[{X}, {Y}]";
 		}
 	}
 }
