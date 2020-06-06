@@ -15,7 +15,10 @@ namespace Model
 
         public static Ship[] GenerateShips()
         {
-            // randomization
+            Ship[] newShips = Ship.CreateCrew(2, 3, 3, 4, 5);
+
+
+
             return Ship.CreateCrew(2, 3, 3, 4, 5);
         }
 
@@ -27,7 +30,9 @@ namespace Model
 
         public override void Shoot(Player enemy)
         {
-            AutoAim();
+            if(TargetCoordinates == NO_TARGET)
+                AutoAim();
+            
             base.Shoot(enemy);
         }
 

@@ -18,7 +18,7 @@ namespace Model
          */
         private int[,] _myTerritory;
         //public int[,] _enenmyTerritory { get; private set; }
-        private Vector TargetCoordinates;
+        public Vector TargetCoordinates { get; private set; }
 
         public const int NUMBER_OF_SHIPS = 5; // const is also static
         public static readonly Vector NO_TARGET = new Vector(-1, -1);
@@ -59,7 +59,7 @@ namespace Model
                 //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
             }
 
-            // update upon feedback from the IsHit() function
+            TargetCoordinates = NO_TARGET;
         }
 
         public void AimAt(Vector target)
