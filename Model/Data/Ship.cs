@@ -14,14 +14,13 @@ namespace Model.Data
         public Ship(int length)
         {
             Length = length;
+            IsHorizontal = true;
+            Coordinates = new Vector[Length];
+            for (int i = 0; i < Length; i++)
+                Coordinates[i] = new Vector(-1, -1);
         }
 
-        public void IsHit(Vector coords)
-        {
-
-        }
-
-        public void GotHit(Vector coords)
+        public void GotHitAt(Vector coords)
         {
 
         }
@@ -34,7 +33,7 @@ namespace Model.Data
 
         public void Mirror()
         {
-
+            IsHorizontal = !IsHorizontal;
         }
 
         public void Replace(Vector head)

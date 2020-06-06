@@ -16,7 +16,7 @@ namespace Model
         public static Ship[] GenerateShips()
         {
             // randomization
-            return new Ship[ NUMBER_OF_SHIPS ];
+            return Ship.CreateCrew(2, 3, 3, 4, 5);
         }
 
         public void AutoAim()

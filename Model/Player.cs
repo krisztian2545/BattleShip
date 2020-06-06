@@ -9,9 +9,15 @@ namespace Model
     {
 
         public string Name { get; }
-        public Ship[] Ships { get; }
+
+        /**
+         * 0 - blank 
+         * 1 - missed shot
+         * 2 - ship
+         * 3 - hit
+         */
         private int[,] _myTerritory;
-        public int[,] _enenmyTerritory { get; private set; }
+        //public int[,] _enenmyTerritory { get; private set; }
         private Vector TargetCoordinates;
 
         public const int NUMBER_OF_SHIPS = 5; // const is also static
@@ -20,15 +26,22 @@ namespace Model
         public Player(string name, Ship[] newShips)
         {
             Name = name;
-            Ships = newShips;
-            _enenmyTerritory = new int[10, 10];
-            PlaceMyShips();
+            //_enenmyTerritory = new int[10, 10];
+            _myTerritory = new int[10, 10];
+            PlaceMyShips(newShips);
+            TargetCoordinates = NO_TARGET;
 
         }
 
-        void PlaceMyShips()
+        void PlaceMyShips(Ship[] ships)
         {
-
+            foreach(Ship ship in ships)
+            {
+                foreach(Vector v in ship.Coordinates)
+                {
+                    _myTerritory[v.X, v.Y] = 2;
+                }
+            }
         }
 
         public virtual void Shoot(Player enemy)
@@ -39,11 +52,11 @@ namespace Model
             if(enemy.IsHit(TargetCoordinates))
             {
                 Logger.Log("Hit!");
-
+                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
             } else
             {
                 Logger.Log("Missed.");
-
+                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
             }
 
             // update upon feedback from the IsHit() function
@@ -58,8 +71,23 @@ namespace Model
 
         public bool IsHit(Vector coordinate)
         {
+            bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
+            _myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
+            return hit;
+        }
 
-            return true;
+        public int[,] GetTerritory(bool showHidden = false)
+        {
+            int[,] output = (int[,])_myTerritory.Clone();
+            if(!showHidden)
+            {
+                for (int i = 0; i < 10; i++)
+                    for (int j = 0; j < 10; j++)
+                        if (output[i, j] == 2)
+                            output[i, j] = 0;
+            }
+
+            return output;
         }
 
     }

@@ -28,7 +28,9 @@ namespace ModelTests
             // Act
             g.Next();
             g.Next();
-            
+
+            int[] ss = new int[5];
+            Logger.Log("ss No 3 = " + ss[2]);
         }
     }
 }
