@@ -8,6 +8,8 @@ namespace Model
     public class Bot : Player
     {
 
+        private static readonly Random _random = new Random();
+
         public Bot(string name) : base($"Bot {name}", GenerateShips())
         {
 
@@ -15,11 +17,33 @@ namespace Model
 
         public static Ship[] GenerateShips()
         {
-            Ship[] newShips = Ship.CreateCrew(2, 3, 3, 4, 5);
+            Ship[] newShips = new Ship[_numberOfShips];
 
+            int i = 0;
+            bool again;
+            do
+            {
+                again = false;
 
+                newShips[i] = new Ship(_shipLengths[i]);
+                newShips[i].IsHorizontal = _random.NextDouble() >= 0.5;
+                newShips[i].Replace(new Vector(_random.Next(10 - newShips[i].Length), _random.Next(10 - newShips[i].Length)));
 
-            return Ship.CreateCrew(2, 3, 3, 4, 5);
+                for (int j = 0; j < i; j++)
+                {
+                    if(Ship.CollisionDetection(newShips[i], newShips[j]))
+                    {
+                        again = true;
+                        break;
+                    }
+                        
+                }
+                if (!again)
+                    i++;
+
+            } while (i < 5);
+
+            return newShips;
         }
 
         public void AutoAim()

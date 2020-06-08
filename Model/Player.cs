@@ -20,7 +20,8 @@ namespace Model
         //public int[,] _enenmyTerritory { get; private set; }
         public Vector TargetCoordinates { get; private set; }
 
-        public const int NUMBER_OF_SHIPS = 5; // const is also static
+        public const int _numberOfShips = 5; // const is also static
+        public static readonly int[] _shipLengths = new int[] { 2, 3, 3, 4, 5 };
         public static readonly Vector NO_TARGET = new Vector(-1, -1);
 
         public Player(string name, Ship[] newShips)
