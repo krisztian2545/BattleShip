@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Model
 {
     public static class Logger
     {
+
         public static void Log(string message)
         {
-            Console.WriteLine(message);
+            Debug.WriteLine(message);
         }
 
         public static string LogAndReturn(string smt)

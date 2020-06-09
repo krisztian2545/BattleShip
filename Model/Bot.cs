@@ -9,10 +9,13 @@ namespace Model
     {
 
         private static readonly Random _random = new Random();
+        private bool _targetProbablyHorizontal; // reset to true on destroyed ship;
+        private List<Vector> _unresolvedShots;
 
         public Bot(string name) : base($"Bot {name}", GenerateShips())
         {
-
+            _targetProbablyHorizontal = true;
+            _unresolvedShots = new List<Vector>();
         }
 
         public static Ship[] GenerateShips()
@@ -49,13 +52,34 @@ namespace Model
         public void AutoAim()
         {
             Logger.Log("Auto aiming...");
-            AimAt(new Vector(7, 7));
+            Vector target = NO_TARGET;
+
+            if(_unresolvedShots.Count == 0)
+            {
+                //random shot
+                Logger.Log("Aiming at random location.");
+                target = new Vector(_random.Next(10), _random.Next(10));
+            } else
+            {
+                if (_targetProbablyHorizontal)
+                {
+                    // check right and left
+                }
+                else
+                {
+                    // check up and down
+                }
+            }
+
+            AimAt(target);
         }
 
         public override void Shoot(Player enemy)
         {
-            if(TargetCoordinates == NO_TARGET)
+            if (TargetCoordinates == NO_TARGET)
+            {
                 AutoAim();
+            }
             
             base.Shoot(enemy);
         }

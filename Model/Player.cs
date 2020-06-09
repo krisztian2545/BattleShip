@@ -17,7 +17,8 @@ namespace Model
          * 3 - hit
          */
         private int[,] _myTerritory;
-        //public int[,] _enenmyTerritory { get; private set; }
+        public int[,] _enenmyTerritory { get; private set; }
+        private Ship[] _myShips;
         public Vector TargetCoordinates { get; private set; }
 
         public const int _numberOfShips = 5; // const is also static
@@ -27,16 +28,17 @@ namespace Model
         public Player(string name, Ship[] newShips)
         {
             Name = name;
-            //_enenmyTerritory = new int[10, 10];
+            _enenmyTerritory = new int[10, 10];
             _myTerritory = new int[10, 10];
-            PlaceMyShips(newShips);
+            _myShips = newShips;
+            PlaceMyShips();
             TargetCoordinates = NO_TARGET;
 
         }
 
-        void PlaceMyShips(Ship[] ships)
+        void PlaceMyShips()
         {
-            foreach(Ship ship in ships)
+            foreach(Ship ship in _myShips)
             {
                 foreach(Vector v in ship.Coordinates)
                 {
@@ -48,16 +50,20 @@ namespace Model
         public virtual void Shoot(Player enemy)
         {
             Logger.Log($"Shooting {enemy.Name}'s ship at {TargetCoordinates.ToString()}");
-            
+
             // check if it hit the enemy
-            if(enemy.IsHit(TargetCoordinates))
+            bool[] feedback = enemy.IsHitAndSink(TargetCoordinates);
+
+            if(feedback[0])
             {
                 Logger.Log("Hit!");
-                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
+                _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
+                //check if destroyed
+
             } else
             {
                 Logger.Log("Missed.");
-                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
+                _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
             }
 
             TargetCoordinates = NO_TARGET;
@@ -70,14 +76,27 @@ namespace Model
             Logger.Log(Name + "is aiming at " + TargetCoordinates.ToString());
         }
 
-        public bool IsHit(Vector coordinate)
+        public bool[] IsHitAndSink(Vector coordinate)
         {
-            bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
-            _myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
+            //bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
+            //_myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
+            bool[] hit = new bool[2];
+
+            foreach(Ship ship in _myShips)
+            {
+                if(ship.GotHitAt(coordinate))
+                {
+                    hit[0] = true;
+                    hit[1] = ship.IsDestroyed();
+                }
+            }
+
             return hit;
         }
 
-        public int[,] GetTerritory(bool showHidden = false)
+
+
+        public int[,] GetShots(bool showHidden = false)
         {
             int[,] output = (int[,])_myTerritory.Clone();
             if(!showHidden)
