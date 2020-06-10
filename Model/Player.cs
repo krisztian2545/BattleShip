@@ -59,7 +59,8 @@ namespace Model
                 Logger.Log("Hit!");
                 _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
-
+                if (feedback[1])
+                    OnShipDestroyed();
             } else
             {
                 Logger.Log("Missed.");
@@ -91,8 +92,18 @@ namespace Model
                 }
             }
 
+            _myTerritory[coordinate.X, coordinate.Y] = hit[0] ? 3 : 1;
             return hit;
         }
+
+        public virtual void OnShipDestroyed()
+        {
+
+        }
+
+
+
+
 
 
 

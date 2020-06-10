@@ -10,11 +10,13 @@ namespace Model
 
         private static readonly Random _random = new Random();
         private bool _targetProbablyHorizontal; // reset to true on destroyed ship;
+        private bool _firstHit;
         private List<Vector> _unresolvedShots;
 
         public Bot(string name) : base($"Bot {name}", GenerateShips())
         {
             _targetProbablyHorizontal = true;
+            _firstHit = true;
             _unresolvedShots = new List<Vector>();
         }
 
@@ -52,27 +54,81 @@ namespace Model
         public void AutoAim()
         {
             Logger.Log("Auto aiming...");
-            Vector target = NO_TARGET;
 
             if(_unresolvedShots.Count == 0)
             {
                 //random shot
                 Logger.Log("Aiming at random location.");
-                target = new Vector(_random.Next(10), _random.Next(10));
+                AimAt(new Vector(_random.Next(10), _random.Next(10)));
             } else
             {
+                Vector lastHit = _unresolvedShots[_unresolvedShots.Count - 1];
+
                 if (_targetProbablyHorizontal)
                 {
                     // check right and left
+                    if(lastHit.X < 9)
+                    {
+                        if (_enenmyTerritory[lastHit.X + 1, lastHit.Y] == 0)
+                        {
+                            AimAt(new Vector(lastHit.X + 1, lastHit.Y));
+                            _firstHit = false;
+                            return;
+                        }
+                    }
+
+                    if (lastHit.X > 0)
+                    {
+                        if (_enenmyTerritory[lastHit.X - 1, lastHit.Y] == 0)
+                        {
+                            AimAt(new Vector(lastHit.X - 1, lastHit.Y));
+                            _firstHit = false;
+                            return;
+                        }
+                    }
+
                 }
                 else
                 {
                     // check up and down
+                    if (lastHit.Y < 9)
+                    {
+                        if (_enenmyTerritory[lastHit.X, lastHit.Y + 1] == 0)
+                        {
+                            AimAt(new Vector(lastHit.X, lastHit.Y + 1));
+                            _firstHit = false;
+                            return;
+                        }
+                    }
+
+                    if (lastHit.Y > 0)
+                    {
+                        if (_enenmyTerritory[lastHit.X, lastHit.Y - 1] == 0)
+                        {
+                            AimAt(new Vector(lastHit.X, lastHit.Y - 1));
+                            _firstHit = false;
+                            return;
+                        }
+                    }
+
                 }
+                
+                if (_firstHit)
+                {
+                    _targetProbablyHorizontal = !_targetProbablyHorizontal;
+                    _firstHit = false;
+                }
+                else
+                {
+                    _unresolvedShots.Remove(lastHit);
+                }
+
             }
 
-            AimAt(target);
+            AutoAim();
         }
+
+
 
         public override void Shoot(Player enemy)
         {
@@ -80,8 +136,19 @@ namespace Model
             {
                 AutoAim();
             }
-            
+
+            Vector temp = TargetCoordinates;
             base.Shoot(enemy);
+
+            if (_enenmyTerritory[temp.X, temp.Y] == 3)
+                _unresolvedShots.Add(temp);
+        }
+
+        public override void OnShipDestroyed()
+        {
+            base.OnShipDestroyed();
+            _firstHit = true;
+            //_unresolvedShots.Clear();
         }
 
     }
