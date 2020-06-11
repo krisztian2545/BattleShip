@@ -32,7 +32,10 @@ namespace Model
 
                 newShips[i] = new Ship(_shipLengths[i]);
                 newShips[i].IsHorizontal = _random.NextDouble() >= 0.5;
-                newShips[i].Replace(new Vector(_random.Next(10 - newShips[i].Length), _random.Next(10 - newShips[i].Length)));
+                if(newShips[i].IsHorizontal)
+                    newShips[i].Replace(new Vector(_random.Next(10 - newShips[i].Length), _random.Next(10)));
+                else
+                    newShips[i].Replace(new Vector(_random.Next(10), _random.Next(10 - newShips[i].Length)));
 
                 for (int j = 0; j < i; j++)
                 {
@@ -60,6 +63,7 @@ namespace Model
                 //random shot
                 Logger.Log("Aiming at random location.");
                 AimAt(new Vector(_random.Next(10), _random.Next(10)));
+                return;
             } else
             {
                 Vector lastHit = _unresolvedShots[_unresolvedShots.Count - 1];

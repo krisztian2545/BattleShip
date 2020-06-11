@@ -16,6 +16,7 @@ namespace ModelTests
             Ship s1 = new Ship(s1Length);
             s1.IsHorizontal = s1Horizontal;
             s1.Replace(new Vector(s1PositionX, s1PositionY));
+            //Model.Logger.Log(s1.ToString());
 
             Ship s2 = new Ship(s2Length);
             s2.IsHorizontal = s2Horizontal;

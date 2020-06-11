@@ -93,5 +93,21 @@ namespace Model.Data
             return false;
         }
 
+        public override string ToString()
+        {
+            string output = "Ship {\n";
+            output += $"\tLength = {this.Length}\n";
+            output += $"\tIsHorizontal = {this.IsHorizontal}\n";
+            output +=  "\tCoordinates = {\n";
+            foreach (Vector v in Coordinates)
+                output += $"\t\t{v.ToString()} \n";
+            output += "\n\t}\n\tHits = {\n";
+            foreach (bool b in Hits)
+                output += $"\t\t{b}\n";
+            output += "\t}\n}";
+
+            return output;
+        }
+
     }
 }

@@ -9,12 +9,13 @@ namespace ModelTests
     public class GameTests
     {
         Game g;
+        Player p1, p2;
 
         [TestInitialize]
         public void BeforeEach()
         {
-            Player p1 = new Player("Naruto", Ship.CreateCrew(2, 3, 3, 4, 5));
-            Player p2 = new Bot("Sasuke");
+            p1 = new Player("Naruto", Bot.GenerateShips());
+            p2 = new Bot("Sasuke");
             g = new Game(p1, p2);
             g.InitGame();
         }
@@ -23,14 +24,24 @@ namespace ModelTests
         public void Next_ShouldNotBreak()
         {
             // Arrange
-            g.GetCurrentPlayer().AimAt( new Vector(5, 6) );
+            g.GetCurrentPlayer().AimAt(new Vector(5, 6));
+
+            Logger.Log("---------------------- ROUND 1 ------------------------");
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
 
             // Act
             g.Next();
+
+            Logger.Log("---------------------- TURN 1 ------------------------");
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
             g.Next();
 
-            int[] ss = new int[5];
-            Logger.Log("ss No 3 = " + ss[2]);
+            Logger.Log("---------------------- TURN 2 ------------------------");
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
+
         }
     }
 }

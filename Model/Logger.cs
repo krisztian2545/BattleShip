@@ -18,5 +18,21 @@ namespace Model
             Log("Logging and returning: " + smt);
             return smt;
         }
+
+        public static string TwoDimArrayToString<T>(T[,] coll)
+        {
+            string output = "{\n";
+            for(int i = 0; i < coll.GetLength(0); i++)
+            {
+                output += "[ ";
+                for (int j = 0; j < coll.GetLength(1); j++)
+                {
+                    output += $"{coll[j, i]} ";
+                }
+                output += "]\n";
+            }
+            output += "}";
+            return output;
+        }
     }
 }

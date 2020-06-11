@@ -51,6 +51,12 @@ namespace Model
         {
             Logger.Log($"Shooting {enemy.Name}'s ship at {TargetCoordinates.ToString()}");
 
+            if(TargetCoordinates == NO_TARGET) // this is not so necessary
+            {
+                Logger.Log("Invalid target!");
+                return;
+            }
+
             // check if it hit the enemy
             bool[] feedback = enemy.IsHitAndSink(TargetCoordinates);
 
@@ -74,7 +80,7 @@ namespace Model
         {
             // do a check here or before this to dont shoot twice at a target
             TargetCoordinates = target;
-            Logger.Log(Name + "is aiming at " + TargetCoordinates.ToString());
+            Logger.Log(Name + " is aiming at " + TargetCoordinates.ToString());
         }
 
         public bool[] IsHitAndSink(Vector coordinate)
