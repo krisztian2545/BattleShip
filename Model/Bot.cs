@@ -148,9 +148,9 @@ namespace Model
                 _unresolvedShots.Add(temp);
         }
 
-        public override void OnShipDestroyed()
+        public override void OnEnemyShipDestroyed()
         {
-            base.OnShipDestroyed();
+            base.OnEnemyShipDestroyed();
             _firstHit = true;
             //_unresolvedShots.Clear();
         }

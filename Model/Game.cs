@@ -1,12 +1,18 @@
-﻿using System;
+﻿using Model.Data;
+using System;
 
 namespace Model
 {
     public class Game
     {
 
-        private int _halfRound;
+        private int _turn;
         Player[] Players { get; }
+        public Player Winner { get; private set; }
+
+        public event EventHandler OnInitGame;
+        public event EventHandler OnChange;
+        public event EventHandler OnGameOver;
 
         public Game(Player player1, Player player2)
         {
@@ -15,25 +21,60 @@ namespace Model
 
         public void InitGame()
         {
-            _halfRound = 0;
+            _turn = 0;
+            Winner = null;
+
+            OnInitGame?.Invoke(this, EventArgs.Empty);
         }
 
         public void Next()
         {
 
-            int index = _halfRound % 2;
-            Logger.Log($"Start of {Players[index].Name}'s turn.");
-            Players[index].Shoot( Players[1 - index] );
+            Logger.Log($"Start of {GetCurrentPlayer().Name}'s turn.");
+            GetCurrentPlayer().Shoot( GetTheOtherPlayer() );
 
-            Logger.Log($"End of {Players[index].Name}'s turn.");
-            _halfRound++;
+            Logger.Log($"End of {GetCurrentPlayer().Name}'s turn.");
+            _turn++;
+
+            OnChange?.Invoke(this, EventArgs.Empty);
+            CheckGameOver();
+        }
+
+        public void CheckGameOver()
+        {
+            Logger.Log("Checking if the game is over...");
+            foreach (Ship ship in GetCurrentPlayer()._myShips)
+                if (!ship.IsDestroyed())
+                    return;
+
+            Winner = GetTheOtherPlayer();
+            GameOver();
+        }
+
+        public void GameOver()
+        {
+            Logger.Log("GAME OVER!");
+            Logger.Log($"The winner is {Winner.Name}");
+            OnGameOver?.Invoke(this, EventArgs.Empty);
         }
 
         public Player GetCurrentPlayer()
         {
-            int i = _halfRound % 2;
+            int i = _turn % 2;
             Logger.Log($"The current player is {Players[i].Name}");
             return Players[i];
+        }
+
+        public Player GetTheOtherPlayer()
+        {
+            int i = 1 - (_turn % 2);
+            Logger.Log($"The other player is {Players[i].Name}");
+            return Players[i];
+        }
+
+        public int GetRound()
+        {
+            return (_turn / 2) + 1;
         }
 
     }

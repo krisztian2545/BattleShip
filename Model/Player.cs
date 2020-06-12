@@ -18,7 +18,7 @@ namespace Model
          */
         private int[,] _myTerritory;
         public int[,] _enenmyTerritory { get; private set; }
-        private Ship[] _myShips;
+        public Ship[] _myShips { get; private set; }
         public Vector TargetCoordinates { get; private set; }
 
         public const int _numberOfShips = 5; // const is also static
@@ -66,7 +66,7 @@ namespace Model
                 _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
                 if (feedback[1])
-                    OnShipDestroyed();
+                    OnShipDestroyed(_enenmyTerritory, TargetCoordinates);
             } else
             {
                 Logger.Log("Missed.");
@@ -95,16 +95,40 @@ namespace Model
                 {
                     hit[0] = true;
                     hit[1] = ship.IsDestroyed();
+                    break;
                 }
             }
 
             _myTerritory[coordinate.X, coordinate.Y] = hit[0] ? 3 : 1;
+            if (hit[1])
+                OnShipDestroyed(_myTerritory, coordinate);
+
             return hit;
         }
 
-        public virtual void OnShipDestroyed()
+        public virtual void OnShipDestroyed(int[,] territory, Vector target)
         {
+            Vector[] sideCoords = new Vector[] { Vector.Up, new Vector(1, -1), Vector.Right, new Vector(1, 1), Vector.Down, new Vector(-1, 1), Vector.Left, new Vector(-1, -1) };
+            List<Vector> l = new List<Vector>();
+            l.Add(target);
 
+            do
+            {
+                Vector current = l[0];
+                foreach(Vector v in sideCoords)
+                {
+                    Vector temp = current + v;
+                    if(territory[temp.X, temp.Y] == 3)
+                    {
+                        l.Add(temp);
+                    } else if (territory[temp.X, temp.Y] == 0)
+                    {
+                        territory[temp.X, temp.Y] = 1;
+                    }
+                }
+
+                l.Remove(current);
+            } while (l.Count > 0);
         }
 
 
@@ -113,7 +137,7 @@ namespace Model
 
 
 
-        public int[,] GetShots(bool showHidden = false)
+        public int[,] GetTerritory(bool showHidden = false)
         {
             int[,] output = (int[,])_myTerritory.Clone();
             if(!showHidden)

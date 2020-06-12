@@ -27,20 +27,20 @@ namespace ModelTests
             g.GetCurrentPlayer().AimAt(new Vector(5, 6));
 
             Logger.Log("---------------------- ROUND 1 ------------------------");
-            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
-            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetTerritory(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetTerritory(true)));
 
             // Act
             g.Next();
 
             Logger.Log("---------------------- TURN 1 ------------------------");
-            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
-            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetTerritory(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetTerritory(true)));
             g.Next();
 
             Logger.Log("---------------------- TURN 2 ------------------------");
-            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetShots(true)));
-            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetShots(true)));
+            Logger.Log("Naruto's territory = " + Logger.TwoDimArrayToString<int>(p1.GetTerritory(true)));
+            Logger.Log("Sasuke's territory = " + Logger.TwoDimArrayToString<int>(p2.GetTerritory(true)));
 
         }
     }
