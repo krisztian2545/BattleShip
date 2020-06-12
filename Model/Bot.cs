@@ -54,7 +54,7 @@ namespace Model
             return newShips;
         }
 
-        public void AutoAim()
+        public void AutoAim(int[,] territory)
         {
             Logger.Log("Auto aiming...");
 
@@ -73,7 +73,7 @@ namespace Model
                     // check right and left
                     if(lastHit.X < 9)
                     {
-                        if (_enenmyTerritory[lastHit.X + 1, lastHit.Y] == 0)
+                        if (territory[lastHit.X + 1, lastHit.Y] == 0)
                         {
                             AimAt(new Vector(lastHit.X + 1, lastHit.Y));
                             _firstHit = false;
@@ -83,7 +83,7 @@ namespace Model
 
                     if (lastHit.X > 0)
                     {
-                        if (_enenmyTerritory[lastHit.X - 1, lastHit.Y] == 0)
+                        if (territory[lastHit.X - 1, lastHit.Y] == 0)
                         {
                             AimAt(new Vector(lastHit.X - 1, lastHit.Y));
                             _firstHit = false;
@@ -97,7 +97,7 @@ namespace Model
                     // check up and down
                     if (lastHit.Y < 9)
                     {
-                        if (_enenmyTerritory[lastHit.X, lastHit.Y + 1] == 0)
+                        if (territory[lastHit.X, lastHit.Y + 1] == 0)
                         {
                             AimAt(new Vector(lastHit.X, lastHit.Y + 1));
                             _firstHit = false;
@@ -107,7 +107,7 @@ namespace Model
 
                     if (lastHit.Y > 0)
                     {
-                        if (_enenmyTerritory[lastHit.X, lastHit.Y - 1] == 0)
+                        if (territory[lastHit.X, lastHit.Y - 1] == 0)
                         {
                             AimAt(new Vector(lastHit.X, lastHit.Y - 1));
                             _firstHit = false;
@@ -129,7 +129,7 @@ namespace Model
 
             }
 
-            AutoAim();
+            AutoAim(territory);
         }
 
 
@@ -138,19 +138,19 @@ namespace Model
         {
             if (TargetCoordinates == NO_TARGET)
             {
-                AutoAim();
+                AutoAim(enemy.GetTerritory());
             }
 
             Vector temp = TargetCoordinates;
             base.Shoot(enemy);
 
-            if (_enenmyTerritory[temp.X, temp.Y] == 3)
+            if (enemy.GetTerritory()[temp.X, temp.Y] == 3)
                 _unresolvedShots.Add(temp);
         }
 
-        public override void OnEnemyShipDestroyed()
+        public override void OnShipDestroyed(int[,] territory, Vector target)
         {
-            base.OnEnemyShipDestroyed();
+            base.OnShipDestroyed(territory, target);
             _firstHit = true;
             //_unresolvedShots.Clear();
         }

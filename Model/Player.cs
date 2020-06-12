@@ -63,14 +63,15 @@ namespace Model
             if(feedback[0])
             {
                 Logger.Log("Hit!");
-                _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
+                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
                 if (feedback[1])
-                    OnShipDestroyed(_enenmyTerritory, TargetCoordinates);
+                    Logger.Log("Destroyed!");
+                //    OnShipDestroyed(_enenmyTerritory, TargetCoordinates);
             } else
             {
                 Logger.Log("Missed.");
-                _enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
+                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
             }
 
             TargetCoordinates = NO_TARGET;
@@ -87,7 +88,7 @@ namespace Model
         {
             //bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
             //_myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
-            bool[] hit = new bool[2];
+            bool[] hit = new bool[] {false, false};
 
             foreach(Ship ship in _myShips)
             {
