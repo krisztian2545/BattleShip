@@ -28,7 +28,10 @@ namespace BattleShip
         private void Computer_Click(object sender, RoutedEventArgs e)
         {
             // start a player vs computer game
-
+            ShipPlacement window = new ShipPlacement();
+            App.Current.MainWindow = window;
+            this.Close();
+            window.Show();
         }
 
         private void Player_Click(object sender, RoutedEventArgs e)

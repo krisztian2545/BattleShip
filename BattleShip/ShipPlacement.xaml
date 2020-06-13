@@ -1,0 +1,15 @@
+﻿<Window x:Class="BattleShip.ShipPlacement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BattleShip"
+        mc:Ignorable="d"
+        Title="ShipPlacement" Height="560" Width="600">
+    <StackPanel Background="Black">
+        <Label Style="{DynamicResource LabelStyle1}"  Content="Choose your name and place your ships!" HorizontalAlignment="Center" FontSize="24"/>
+        <TextBox TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black"/>
+        <Grid Width="400" Height="400" Margin="0,30,0,0"/>
+    </StackPanel>
+
+</Window>

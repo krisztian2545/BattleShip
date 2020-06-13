@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <StackPanel Background="Black">
-        <Label Content="BATTLESHIPS" FontWeight="Bold" FontSize="48" HorizontalAlignment="Center" Margin="0,50,0,0" Background="{x:Null}" Foreground="Lime"/>
-        <Button x:Name="Computer" Style="{DynamicResource ButtonStyle1}" Content="Player vs Computer" Margin="0,40,0,0" Click="Computer_Click"/>
-        <Button x:Name="Player" Style="{DynamicResource ButtonStyle1}" Content="Player vs Player" Margin="0,20,0,0" Click="Player_Click"/>
-        <Button x:Name="Highscores" Style="{DynamicResource ButtonStyle1}" Content="Highscores" Margin="0,20,0,0" Click="Highscores_Click"/>
+        <Label Style="{DynamicResource LabelStyle1}" Content="BATTLESHIPS" FontWeight="Bold" FontSize="48" HorizontalAlignment="Center" Margin="0,50,0,0"/>
+        <Button x:Name="Computer" Style="{DynamicResource ButtonStyle1}" Content="Player vs Computer" Margin="0,40,0,0" Click="Computer_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="Player" Style="{DynamicResource ButtonStyle1}" Content="Player vs Player" Margin="0,20,0,0" Click="Player_Click" HorizontalAlignment="Center"/>
+        <Button x:Name="Highscores" Style="{DynamicResource ButtonStyle1}" Content="Highscores" Margin="0,20,0,0" Click="Highscores_Click" HorizontalAlignment="Center"/>
     </StackPanel>
 
 </Window>
