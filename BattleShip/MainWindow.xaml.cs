@@ -24,5 +24,23 @@ namespace BattleShip
         {
             InitializeComponent();
         }
+
+        private void Computer_Click(object sender, RoutedEventArgs e)
+        {
+            // start a player vs computer game
+
+        }
+
+        private void Player_Click(object sender, RoutedEventArgs e)
+        {
+            // start a player vs player game
+
+        }
+
+        private void Highscores_Click(object sender, RoutedEventArgs e)
+        {
+            // show the highscores window
+
+        }
     }
 }
