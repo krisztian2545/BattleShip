@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel Background="Black">
+        <Label Content="BATTLESHIPS" FontWeight="Bold" FontSize="48" HorizontalAlignment="Center" Margin="0,50,0,0" Background="{x:Null}" Foreground="Lime"/>
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Player vs Computer" HorizontalAlignment="Center" FontSize="24" FontWeight="Normal" Margin="0,40,0,0" Padding="10,4,10,4" Foreground="Lime" Background="{x:Null}" BorderBrush="Lime"/>
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Player vs Player" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="24" Padding="10,4,10,4" BorderBrush="Lime" Background="{x:Null}" Foreground="Lime"/>
+        <Button Style="{DynamicResource ButtonStyle1}" Content="Highscores" Margin="0,20,0,0" FontSize="24" HorizontalAlignment="Center" Padding="10,4,10,4" Foreground="Lime" BorderBrush="Lime" Background="{x:Null}"/>
+    </StackPanel>
 
-    </Grid>
 </Window>
