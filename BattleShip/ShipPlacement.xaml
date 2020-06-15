@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
-        Title="Battleships" ResizeMode="NoResize" Height="570" Width="600">
+        Title="Battleships" ResizeMode="NoResize" Width="600" KeyDown="Window_KeyDown" Height="630">
     <StackPanel Background="Black">
         <Label Style="{DynamicResource LabelStyle1}"  Content="Choose your name and place your ships!" HorizontalAlignment="Center" FontSize="24"/>
         <TextBox TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black"/>
@@ -57,6 +57,7 @@
             <Label Style="{StaticResource LabelStyle1}" Content="10" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="9"/>
 
         </Grid>
+        <Button Style="{StaticResource ButtonStyle1}" Content="Ready" Margin="5,20,5,0"/>
 
     </StackPanel>
 

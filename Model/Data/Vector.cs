@@ -21,6 +21,11 @@
 			return new Vector(a.X + b.X, a.Y + b.Y);
 		}
 
+		public static Vector operator -(Vector a, Vector b)
+		{
+			return new Vector(a.X - b.X, a.Y - b.Y);
+		}
+
 		public static bool operator ==(Vector a, Vector b)
 		{
 			return a.X == b.X
@@ -30,6 +35,11 @@
 		public static bool operator !=(Vector a, Vector b)
 		{
 			return !(a == b);
+		}
+
+		public Vector Inverted()
+		{
+			return new Vector(Y, X);
 		}
 
 		public override string ToString()

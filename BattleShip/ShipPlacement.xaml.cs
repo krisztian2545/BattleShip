@@ -25,6 +25,8 @@ namespace BattleShip
         private Ship[] _ships;
         private Ship _draggedShip;
         private Model.Data.Vector _lastPosition;
+        private Model.Data.Vector _difference;
+        private bool _lastIsHorizontal;
 
         public ShipPlacement()
         {
@@ -82,6 +84,8 @@ namespace BattleShip
                     {
                         _draggedShip = ship;
                         _lastPosition = pos;
+                        _difference = ship.Coordinates[0] - pos;
+                        _lastIsHorizontal = ship.IsHorizontal;
                         return;
                     }
 
@@ -92,7 +96,7 @@ namespace BattleShip
         {
             Logger.Log("dragging false...");
             _dragging = false;
-            _draggedShip = null;
+            //_draggedShip = null;
         }
 
         private void Rectangle_MouseMove(object sender, MouseEventArgs e)
@@ -102,34 +106,70 @@ namespace BattleShip
                 
                 Logger.Log($"mouse x: {Grid.GetColumn((Rectangle)sender)}");
                 Logger.Log($"mouse y: {Grid.GetRow((Rectangle)sender)}");
-                _draggedShip.Replace(new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender)));
 
-                if (CollisionDetection(_draggedShip))
-                {
-                    Logger.Log("Collision detected...");
-                    _draggedShip.Replace(_lastPosition);
-                }
+                MoveShipIfPossible(new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender)), false);
 
-                _lastPosition = _draggedShip.Coordinates[0];
                 DrawShips();
             }
+        }
+
+        private void MoveShipIfPossible(Model.Data.Vector pos, bool rotate)
+        {
+            if(rotate)
+            {
+                _draggedShip.IsHorizontal = !_lastIsHorizontal;
+                _draggedShip.Replace(pos - _difference + _difference.Inverted());
+                _difference = _difference.Inverted();
+            } else
+            {
+                _draggedShip.Replace(pos + _difference);
+            }
+
+            if (CollisionDetection(_draggedShip) || (_draggedShip.Coordinates[0].X < 0) || (_draggedShip.Coordinates[0].Y < 0) || 
+                (_draggedShip.Coordinates[_draggedShip.Length -1].X > 9) || (_draggedShip.Coordinates[_draggedShip.Length - 1].Y > 9))
+            {
+                Logger.Log("Collision detected...");
+
+                _draggedShip.IsHorizontal = _lastIsHorizontal;
+                _draggedShip.Replace(_lastPosition);
+                if(rotate)
+                    _difference = _difference.Inverted();
+            }
+
+            _lastIsHorizontal = _draggedShip.IsHorizontal;
+            _lastPosition = _draggedShip.Coordinates[0];
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
             Logger.Log("dragging false...");
             _dragging = false;
-            _draggedShip = null;
+            //_draggedShip = null;
         }
 
         private bool CollisionDetection(Ship ship)
         {
             foreach (Ship s in _ships)
-                if ((s != ship) && (Ship.CollisionDetection(s, ship)))
+                if ((s != ship) && (Ship.CollisionDetection(s, ship)) /*and inside the grid*/)
                     return true;
 
             return false;
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Logger.Log($"Pressed key: {e.Key}");
+
+            if((e.Key == Key.R) && (_draggedShip != null))
+            {
+                MoveShipIfPossible(_lastPosition, true);
+                DrawShips();
+            }
+        }
+
+        private void Ready_Click(object sender, RoutedEventArgs e)
+        {
+            // transfer data
+        }
     }
 }
