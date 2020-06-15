@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Battleships" ResizeMode="NoResize" Height="450" Width="800">
     <StackPanel Background="Black">
         <Label Style="{DynamicResource LabelStyle1}" Content="BATTLESHIPS" FontWeight="Bold" FontSize="48" HorizontalAlignment="Center" Margin="0,50,0,0"/>
         <Button x:Name="Computer" Style="{DynamicResource ButtonStyle1}" Content="Player vs Computer" Margin="0,40,0,0" Click="Computer_Click" HorizontalAlignment="Center"/>
