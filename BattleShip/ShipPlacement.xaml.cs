@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Model;
+using Model.Data;
 
 namespace BattleShip
 {
@@ -20,13 +21,16 @@ namespace BattleShip
     {
 
         private Rectangle[,] _grid;
-        private bool dragging;
+        private bool _dragging;
+        private Ship[] _ships;
+        private Ship _draggedShip;
+        private Model.Data.Vector _lastPosition;
 
         public ShipPlacement()
         {
             InitializeComponent();
 
-            dragging = false;
+            _dragging = false;
             _grid = new Rectangle[10, 10];
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
@@ -43,33 +47,88 @@ namespace BattleShip
                     Gridd.Children.Add(_grid[j, i]);
                 }
             Gridd.MouseLeave += Grid_MouseLeave;
+
+            // initialize ships
+            _ships = Bot.GenerateShips();
+
+            DrawShips();
+        }
+
+        private void DrawShips()
+        {
+            SolidColorBrush ColorLime = new SolidColorBrush(Colors.Lime);
+            SolidColorBrush ColorBlack = new SolidColorBrush(Colors.Black);
+
+            // clear grid
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    _grid[j, i].Fill = ColorBlack;
+
+            // paint ships
+            foreach (Ship ship in _ships)
+                foreach (Model.Data.Vector v in ship.Coordinates)
+                    _grid[v.X, v.Y].Fill = ColorLime;
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Logger.Log("dragging true...");
-            dragging = true;
+            _dragging = true;
+            var pos = new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender));
+
+            foreach (Ship ship in _ships)
+                foreach (Model.Data.Vector v in ship.Coordinates)
+                    if(v == pos)
+                    {
+                        _draggedShip = ship;
+                        _lastPosition = pos;
+                        return;
+                    }
+
+            Logger.Log("Ship not found!!!");
         }
 
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Logger.Log("dragging false...");
-            dragging = false;
+            _dragging = false;
+            _draggedShip = null;
         }
 
         private void Rectangle_MouseMove(object sender, MouseEventArgs e)
         {
-            if(dragging)
+            if(_dragging && (_draggedShip != null))
             {
+                
                 Logger.Log($"mouse x: {Grid.GetColumn((Rectangle)sender)}");
                 Logger.Log($"mouse y: {Grid.GetRow((Rectangle)sender)}");
+                _draggedShip.Replace(new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender)));
+
+                if (CollisionDetection(_draggedShip))
+                {
+                    Logger.Log("Collision detected...");
+                    _draggedShip.Replace(_lastPosition);
+                }
+
+                _lastPosition = _draggedShip.Coordinates[0];
+                DrawShips();
             }
         }
 
         private void Grid_MouseLeave(object sender, MouseEventArgs e)
         {
             Logger.Log("dragging false...");
-            dragging = false;
+            _dragging = false;
+            _draggedShip = null;
+        }
+
+        private bool CollisionDetection(Ship ship)
+        {
+            foreach (Ship s in _ships)
+                if ((s != ship) && (Ship.CollisionDetection(s, ship)))
+                    return true;
+
+            return false;
         }
 
     }
