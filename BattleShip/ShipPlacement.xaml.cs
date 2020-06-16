@@ -90,6 +90,9 @@ namespace BattleShip
                     }
 
             Logger.Log("Ship not found!!!");
+            _draggedShip = null;
+
+            Keyboard.Focus(Gridd);
         }
 
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -156,7 +159,7 @@ namespace BattleShip
             return false;
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Gridd_KeyDown(object sender, KeyEventArgs e)
         {
             Logger.Log($"Pressed key: {e.Key}");
 
@@ -171,5 +174,6 @@ namespace BattleShip
         {
             // transfer data
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,10 +29,9 @@ namespace BattleShip
         private void Computer_Click(object sender, RoutedEventArgs e)
         {
             // start a player vs computer game
-            ShipPlacement window = new ShipPlacement();
+            var window = new GameWindow();
             App.Current.MainWindow = window;
             this.Close();
-            window.Show();
         }
 
         private void Player_Click(object sender, RoutedEventArgs e)

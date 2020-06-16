@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
-        Title="Battleships" ResizeMode="NoResize" Width="600" KeyDown="Window_KeyDown" Height="630">
-    <StackPanel Background="Black">
+        Title="Battleships" ResizeMode="NoResize" Width="600" Height="630">
+    <StackPanel Background="Black" Focusable="True">
         <Label Style="{DynamicResource LabelStyle1}"  Content="Choose your name and place your ships!" HorizontalAlignment="Center" FontSize="24"/>
-        <TextBox TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black"/>
-        <Grid x:Name="Gridd" Width="400" Height="400" Margin="0,50,0,0">
+        <TextBox TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black" Height="28.6"/>
+        <Grid x:Name="Gridd" Width="400" Height="400" Margin="0,50,0,0" Focusable="True" KeyDown="Gridd_KeyDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -57,7 +57,7 @@
             <Label Style="{StaticResource LabelStyle1}" Content="10" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="9"/>
 
         </Grid>
-        <Button Style="{StaticResource ButtonStyle1}" Content="Ready" Margin="5,20,5,0"/>
+        <Button x:Name="Ready" Style="{StaticResource ButtonStyle1}" Content="Ready" Margin="5,20,5,0" Click="Ready_Click"/>
 
     </StackPanel>
 
