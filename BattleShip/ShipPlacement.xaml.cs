@@ -172,7 +172,12 @@ namespace BattleShip
 
         private void Ready_Click(object sender, RoutedEventArgs e)
         {
-            // transfer data
+            this.Close();
+        }
+
+        public Player GetInitializedPlayer()
+        {
+            return new Player(NameBox.Text, _ships);
         }
 
     }

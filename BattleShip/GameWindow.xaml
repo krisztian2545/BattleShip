@@ -5,8 +5,201 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="GameWindow" Height="700" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="1398">
+    <StackPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch">
+        <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Left">
+            <StackPanel Width="200" HorizontalAlignment="Left">
+                <Label Style="{StaticResource LabelStyle1}" Content="Naruto's fleet:" FontSize="22"/>
+                <Grid Height="30" Width="60" HorizontalAlignment="Left" Margin="25,100,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="120" HorizontalAlignment="Left" Margin="25,50,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="150" HorizontalAlignment="Left" Margin="25,50,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <StackPanel HorizontalAlignment="Center" Width="1000">
+            <StackPanel Height="100" Orientation="Horizontal">
+                
+            </StackPanel>
+
+            <StackPanel Height="600" Orientation="Horizontal">
+                <Grid Width="400" Height="400" Margin="50,50,0,0" Focusable="True" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Style="{StaticResource LabelStyle1}" Content="A" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="B" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="1"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="C" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="2"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="D" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="3"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="E" Margin="0,-43,0,43" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="4"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="F" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="5"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="G" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="6"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="H" Margin="0,-42,0,42" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="7"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="I" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="8"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="J" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="9"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="1" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="2" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="1"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="3" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="2"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="4" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="3"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="5" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="4"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="6" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="5"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="7" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="6"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="8" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="7"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="9" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="8"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="10" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="9"/>
+
+                </Grid>
+
+                <Rectangle Stroke="Lime" HorizontalAlignment="Center" Margin="30,100,20,0" />
+                
+                <Grid Width="400" Height="400" Margin="50,50,50,0" Focusable="True" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Label Style="{StaticResource LabelStyle1}" Content="A" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="B" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="1"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="C" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="2"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="D" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="3"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="E" Margin="0,-43,0,43" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="4"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="F" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="5"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="G" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="6"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="H" Margin="0,-42,0,42" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="7"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="I" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="8"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="J" Margin="0,-44,0,44" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Column="9"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="1" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="2" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="1"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="3" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="2"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="4" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="3"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="5" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="4"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="6" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="5"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="7" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="6"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="8" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="7"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="9" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="8"/>
+                    <Label Style="{StaticResource LabelStyle1}" Content="10" Margin="-44,0,44,0" FontSize="30" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Normal" Grid.Row="9"/>
+
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+
+        <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Right">
+            <StackPanel Width="200"  HorizontalAlignment="Right">
+                <Label Style="{StaticResource LabelStyle1}" Content="Sasuke's fleet:" FontSize="22"/>
+                <Grid Height="30" Width="60" HorizontalAlignment="Right" Margin="25,100,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="120" HorizontalAlignment="Right" Margin="25,50,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid Height="30" Width="150" HorizontalAlignment="Right" Margin="25,50,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+
 </Window>

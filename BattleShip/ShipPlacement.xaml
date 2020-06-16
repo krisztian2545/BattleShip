@@ -8,7 +8,7 @@
         Title="Battleships" ResizeMode="NoResize" Width="600" Height="630">
     <StackPanel Background="Black" Focusable="True">
         <Label Style="{DynamicResource LabelStyle1}"  Content="Choose your name and place your ships!" HorizontalAlignment="Center" FontSize="24"/>
-        <TextBox TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black" Height="28.6"/>
+        <TextBox x:Name="NameBox" TextWrapping="NoWrap" Width="200" FontSize="20" Background="Black" BorderBrush="Lime" Foreground="Lime" SelectionBrush="Lime" SelectionTextBrush="Black" Height="28.6"/>
         <Grid x:Name="Gridd" Width="400" Height="400" Margin="0,50,0,0" Focusable="True" KeyDown="Gridd_KeyDown">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
