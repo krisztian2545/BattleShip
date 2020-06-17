@@ -23,16 +23,20 @@ namespace BattleShip
     public partial class GameWindow : Window
     {
         private Game _game;
+        private Player _humanPlayer;
         private DispatcherTimer _timer;
         private long _secondsElapsed = 0;
 
         private List<Rectangle[]> _leftSideShips;
         private List<Rectangle[]> _rightSideShips;
 
-        SolidColorBrush LimeBrush = new SolidColorBrush(Colors.Lime);
-        SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black);
-        SolidColorBrush BlueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 50));
-        SolidColorBrush RedBrush = new SolidColorBrush(Color.FromRgb(50, 0, 0));
+        private Rectangle[,] _leftMainGrid;
+        private Rectangle[,] _rightMainGrid;
+
+        SolidColorBrush LimeBrush = new SolidColorBrush(Colors.Lime); // ship
+        SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black); // blank space
+        SolidColorBrush BlueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 50)); // missed shot
+        SolidColorBrush RedBrush = new SolidColorBrush(Color.FromRgb(50, 0, 0)); // hit
 
         public GameWindow()
         {
@@ -50,8 +54,9 @@ namespace BattleShip
             // init players
             Player[] _players = new Player[2];
             _players[0] = new Bot("Enigma");
-            _players[1] = ((ShipPlacement)sender).GetInitializedPlayer();
-            
+            _humanPlayer = ((ShipPlacement)sender).GetInitializedPlayer();
+            _players[1] = _humanPlayer;
+
             // random player starts
             int index = ((new Random()).NextDouble() >= 0.5) ? 1 : 0;
             _game = new Game(_players[index], _players[1-index]);
@@ -128,10 +133,36 @@ namespace BattleShip
                 _rightSideShips.Add(rectShip);
             }
 
+            // init main grids
+            _leftMainGrid = new Rectangle[10, 10];
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                {
+                    Rectangle rect = NewCustomRect(j, i, BlackBrush);
+                    if(_humanPlayer.Name == _game.Players[0].Name)
+                        rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
+
+                    _leftMainGrid[j, i] = rect;
+                    LeftMainGrid.Children.Add(rect);
+                }
+
+            _rightMainGrid = new Rectangle[10, 10];
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                {
+                    Rectangle rect = NewCustomRect(j, i, BlackBrush);
+                    if (_humanPlayer.Name == _game.Players[1].Name)
+                        rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
+
+                    _rightMainGrid[j, i] = rect;
+                    RightMainGrid.Children.Add(rect);
+                }
 
             this.Show();
             _game.InitGame();
         }
+
+        
 
         private Rectangle NewCustomRect(int x, int y, SolidColorBrush brush)
         {
@@ -153,6 +184,18 @@ namespace BattleShip
             // update side ships
             DrawSideShips();
 
+            // update informational labels
+            if(_game.Players[0].Name == _game.GetCurrentPlayer().Name)
+            {
+                // left player's turn
+                LeftInformativeLabel.Content = "Your turn!";
+                RightInformative_Label.Content = "";
+            } else
+            {
+                // right player's turn
+                LeftInformativeLabel.Content = "";
+                RightInformative_Label.Content = "Your turn!";
+            }
         }
 
         private void DrawSideShips()
@@ -176,6 +219,11 @@ namespace BattleShip
                     _rightSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
                 }
             }
+        }
+
+        private void DrawMainGrids()
+        {
+
         }
 
         private void _timer_Tick(object sender, EventArgs e)
@@ -205,5 +253,14 @@ namespace BattleShip
             _timer.Stop();
         }
 
+        /*private void LeftMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }*/
+
+        private void MainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Logger.Log($"you clicked {((Grid)((Rectangle)sender).Parent).Name}");
+        }
     }
 }
