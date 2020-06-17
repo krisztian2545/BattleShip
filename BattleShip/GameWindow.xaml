@@ -9,28 +9,28 @@
     <StackPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch">
         <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Left">
             <StackPanel Width="200" HorizontalAlignment="Left">
-                <Label Style="{StaticResource LabelStyle1}" Content="Naruto's fleet:" FontSize="22"/>
-                <Grid Height="30" Width="60" HorizontalAlignment="Left" Margin="25,100,0,0">
+                <Label x:Name="LeftName" Style="{StaticResource LabelStyle1}" Content="Naruto's fleet:" FontSize="22"/>
+                <Grid x:Name="LeftGrid1" Height="30" Width="60" HorizontalAlignment="Left" Margin="25,100,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-                <Grid Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
+                <Grid x:Name="LeftGrid2" Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="120" HorizontalAlignment="Left" Margin="25,50,0,0">
+                <Grid x:Name="LeftGrid3" Height="30" Width="90" HorizontalAlignment="Left" Margin="25,50,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid x:Name="LeftGrid4" Height="30" Width="120" HorizontalAlignment="Left" Margin="25,50,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -38,7 +38,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="150" HorizontalAlignment="Left" Margin="25,50,0,0">
+                <Grid x:Name="LeftGrid5" Height="30" Width="150" HorizontalAlignment="Left" Margin="25,50,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -51,12 +51,17 @@
         </Border>
 
         <StackPanel HorizontalAlignment="Center" Width="1000">
-            <StackPanel Height="100" Orientation="Horizontal">
-                
+            <StackPanel Height="150" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Label x:Name="LeftInformativeLabel" Style="{StaticResource LabelStyle1}" Content="Your turn!" HorizontalAlignment="Left" Width="400" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36"/>
+                <StackPanel HorizontalAlignment="Center" Width="200">
+                    <Label x:Name="RoundLabel" Style="{StaticResource LabelStyle1}" Content="Round: " HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="75" FontSize="36"/>
+                    <Label x:Name="TimeLabel" Style="{StaticResource LabelStyle1}" Content="Time:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="75" FontSize="24"/>
+                </StackPanel>
+                <Label x:Name="RightInformative_Label" Style="{StaticResource LabelStyle1}" Content="" HorizontalAlignment="Right" Width="400" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </StackPanel>
 
-            <StackPanel Height="600" Orientation="Horizontal">
-                <Grid Width="400" Height="400" Margin="50,50,0,0" Focusable="True" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Height="520">
+                <Grid x:Name="LeftMainGrid" Width="400" Height="400" Margin="50,80,0,0" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -105,9 +110,9 @@
 
                 </Grid>
 
-                <Rectangle Stroke="Lime" HorizontalAlignment="Center" Margin="30,100,20,0" />
+                <Rectangle Stroke="Lime" HorizontalAlignment="Center" Margin="30,50,20,0" VerticalAlignment="Stretch" />
                 
-                <Grid Width="400" Height="400" Margin="50,50,50,0" Focusable="True" HorizontalAlignment="Right">
+                <Grid x:Name="RightMainGrid" Width="400" Height="400" Margin="50,80,50,0" Focusable="True" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -160,28 +165,28 @@
 
         <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Right">
             <StackPanel Width="200"  HorizontalAlignment="Right">
-                <Label Style="{StaticResource LabelStyle1}" Content="Sasuke's fleet:" FontSize="22"/>
-                <Grid Height="30" Width="60" HorizontalAlignment="Right" Margin="25,100,25,0">
+                <Label x:Name="RightName" Style="{StaticResource LabelStyle1}" Content="Sasuke's fleet:" FontSize="22"/>
+                <Grid x:Name="RightGrid1" Height="30" Width="60" HorizontalAlignment="Right" Margin="25,100,25,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-                <Grid Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
+                <Grid x:Name="RightGrid2" Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="120" HorizontalAlignment="Right" Margin="25,50,25,0">
+                <Grid x:Name="RightGrid3" Height="30" Width="90" HorizontalAlignment="Right" Margin="25,50,25,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+                <Grid x:Name="RightGrid4" Height="30" Width="120" HorizontalAlignment="Right" Margin="25,50,25,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -189,7 +194,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
-                <Grid Height="30" Width="150" HorizontalAlignment="Right" Margin="25,50,25,0">
+                <Grid x:Name="RightGrid5" Height="30" Width="150" HorizontalAlignment="Right" Margin="25,50,25,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>

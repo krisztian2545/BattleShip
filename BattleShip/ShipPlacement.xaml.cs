@@ -58,18 +58,18 @@ namespace BattleShip
 
         private void DrawShips()
         {
-            SolidColorBrush ColorLime = new SolidColorBrush(Colors.Lime);
-            SolidColorBrush ColorBlack = new SolidColorBrush(Colors.Black);
+            SolidColorBrush LimeBrush = new SolidColorBrush(Colors.Lime);
+            SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black);
 
             // clear grid
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
-                    _grid[j, i].Fill = ColorBlack;
+                    _grid[j, i].Fill = BlackBrush;
 
             // paint ships
             foreach (Ship ship in _ships)
                 foreach (Model.Data.Vector v in ship.Coordinates)
-                    _grid[v.X, v.Y].Fill = ColorLime;
+                    _grid[v.X, v.Y].Fill = LimeBrush;
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -172,7 +172,10 @@ namespace BattleShip
 
         private void Ready_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (NameBox.Text != "")
+                this.Close();
+            else
+                TopLabel.Content = "Choose a name!";
         }
 
         public Player GetInitializedPlayer()

@@ -7,7 +7,7 @@ namespace Model
     {
 
         private int _turn;
-        Player[] Players { get; }
+        public Player[] Players { get; private set; }
         public Player Winner { get; private set; }
 
         public event EventHandler OnInitGame;
