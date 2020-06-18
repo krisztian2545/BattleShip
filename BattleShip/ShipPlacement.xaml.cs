@@ -75,6 +75,8 @@ namespace BattleShip
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Keyboard.Focus(Gridd);
+            TopLabel.Content = "You can rotate the ship by pressing: R";
+
             Logger.Log("dragging true...");
             _dragging = true;
             var pos = new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender));

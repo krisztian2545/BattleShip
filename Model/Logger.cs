@@ -8,9 +8,20 @@ namespace Model
     public static class Logger
     {
 
+        public static bool LogToFile = false;
+
         public static void Log(string message)
         {
             Debug.WriteLine(message);
+
+            if (LogToFile)
+            {
+                using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter("log.txt", true))
+                {
+                    file.WriteLine(message);
+                }
+            }
         }
 
         public static string LogAndReturn(string smt)

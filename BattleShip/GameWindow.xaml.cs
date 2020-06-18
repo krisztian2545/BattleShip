@@ -44,7 +44,7 @@ namespace BattleShip
         public GameWindow()
         {
             InitializeComponent();
-
+            
             Logger.Log("Game window init...");
 
             ShipPlacement window = new ShipPlacement();
@@ -322,7 +322,18 @@ namespace BattleShip
         {
             _timer.Stop();
 
-
+            if (_game.Players[0].Name == _game.Winner.Name)
+            {
+                // left player's turn
+                LeftInformativeLabel.Content = "You won!";
+                RightInformative_Label.Content = "You lose.";
+            }
+            else
+            {
+                // right player's turn
+                LeftInformativeLabel.Content = "You lose.";
+                RightInformative_Label.Content = "You won!";
+            }
         }
 
         /*private void LeftMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

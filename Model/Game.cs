@@ -36,7 +36,10 @@ namespace Model
             Logger.Log($"End of {GetCurrentPlayer().Name}'s turn.");
             _turn++;
 
-            OnChange?.Invoke(this, new GameOverEventArgs(CheckGameOver()));
+            bool isGameOver = CheckGameOver();
+            OnChange?.Invoke(this, new GameOverEventArgs(isGameOver));
+            if (isGameOver)
+                GameOver();
         }
 
         public bool CheckGameOver()
@@ -47,7 +50,7 @@ namespace Model
                     return false;
 
             Winner = GetTheOtherPlayer();
-            GameOver();
+            //GameOver();
 
             return true;
         }
