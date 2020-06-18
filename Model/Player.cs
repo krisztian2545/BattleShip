@@ -89,6 +89,7 @@ namespace Model
             //bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
             //_myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
             bool[] hit = new bool[] {false, false};
+            Ship hitShip = null;
 
             foreach(Ship ship in _myShips)
             {
@@ -96,19 +97,22 @@ namespace Model
                 {
                     hit[0] = true;
                     hit[1] = ship.IsDestroyed();
+                    hitShip = ship;
                     break;
                 }
             }
 
             _myTerritory[coordinate.X, coordinate.Y] = hit[0] ? 3 : 1;
             if (hit[1])
-                OnShipDestroyed(_myTerritory, coordinate);
+                OnShipDestroyed(hitShip);
 
             return hit;
         }
 
-        public virtual void OnShipDestroyed(int[,] territory, Vector target)
+        public virtual void OnShipDestroyed(/*int[,] territory, Vector target, */Ship ship)
         {
+            /*Logger.Log("On ship destroyed...");
+
             Vector[] sideCoords = new Vector[] { Vector.Up, new Vector(1, -1), Vector.Right, new Vector(1, 1), Vector.Down, new Vector(-1, 1), Vector.Left, new Vector(-1, -1) };
             List<Vector> l = new List<Vector>();
             l.Add(target);
@@ -116,24 +120,47 @@ namespace Model
             do
             {
                 Vector current = l[0];
+                Logger.Log($"The current coord is: {current.ToString()}");
                 foreach(Vector v in sideCoords)
                 {
+                    Logger.Log($"The v coord is: {v.ToString()}");
                     Vector temp = current + v;
                     if(territory[temp.X, temp.Y] == 3)
                     {
+                        Logger.Log($"Adding {temp.ToString()} to l...");
                         l.Add(temp);
                     } else if (territory[temp.X, temp.Y] == 0)
                     {
+                        Logger.Log($"Marking {temp.ToString()} as miss...");
                         territory[temp.X, temp.Y] = 1;
                     }
                 }
 
+                Logger.Log($"l.Count before remove: {l.Count}");
                 l.Remove(current);
-            } while (l.Count > 0);
+                Logger.Log($"l.Count after remove: {l.Count}");
+            } while (l.Count > 0);*/
+
+            Logger.Log("On ship destroyed...");
+
+            Vector[] sideCoords = new Vector[] { Vector.Up, new Vector(1, -1), Vector.Right, new Vector(1, 1), Vector.Down, new Vector(-1, 1), Vector.Left, new Vector(-1, -1) };
+            
+            foreach(Vector current in ship.Coordinates)
+            {
+                Logger.Log($"The current coord is: {current.ToString()}");
+                foreach (Vector v in sideCoords)
+                {
+                    Logger.Log($"The v coord is: {v.ToString()}");
+                    Vector temp = current + v;
+                    if (_myTerritory[temp.X, temp.Y] == 0)
+                    {
+                        Logger.Log($"Marking {temp.ToString()} as miss...");
+                        _myTerritory[temp.X, temp.Y] = 1;
+                    }
+                }
+            }
+
         }
-
-
-
 
 
 

@@ -27,6 +27,9 @@ namespace BattleShip
         private DispatcherTimer _timer;
         private long _secondsElapsed = 0;
 
+        private bool _showBotsShips;
+        private bool _canInteract;
+
         private List<Rectangle[]> _leftSideShips;
         private List<Rectangle[]> _rightSideShips;
 
@@ -35,8 +38,8 @@ namespace BattleShip
 
         SolidColorBrush LimeBrush = new SolidColorBrush(Colors.Lime); // ship
         SolidColorBrush BlackBrush = new SolidColorBrush(Colors.Black); // blank space
-        SolidColorBrush BlueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 50)); // missed shot
-        SolidColorBrush RedBrush = new SolidColorBrush(Color.FromRgb(50, 0, 0)); // hit
+        SolidColorBrush BlueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 100)); // missed shot
+        SolidColorBrush RedBrush = new SolidColorBrush(Color.FromRgb(100, 0, 0)); // hit
 
         public GameWindow()
         {
@@ -139,7 +142,7 @@ namespace BattleShip
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle rect = NewCustomRect(j, i, BlackBrush);
-                    if(_humanPlayer.Name == _game.Players[0].Name)
+                    if(_humanPlayer.Name != _game.Players[0].Name)
                         rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
 
                     _leftMainGrid[j, i] = rect;
@@ -151,7 +154,7 @@ namespace BattleShip
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle rect = NewCustomRect(j, i, BlackBrush);
-                    if (_humanPlayer.Name == _game.Players[1].Name)
+                    if (_humanPlayer.Name != _game.Players[1].Name)
                         rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
 
                     _rightMainGrid[j, i] = rect;
@@ -223,7 +226,45 @@ namespace BattleShip
 
         private void DrawMainGrids()
         {
+            // left player
+            var grid = _game.Players[0].GetTerritory(_showBotsShips || (_game.Players[0].Name == _humanPlayer.Name));
+            for(int y = 0; y < 10; y++)
+                for(int x = 0; x < 10; x++)
+                    switch(grid[x, y])
+                    {
+                        case 0:
+                            _leftMainGrid[x, y].Fill = BlackBrush;
+                            break;
+                        case 1:
+                            _leftMainGrid[x, y].Fill = BlueBrush;
+                            break;
+                        case 2:
+                            _leftMainGrid[x, y].Fill = LimeBrush;
+                            break;
+                        case 3:
+                            _leftMainGrid[x, y].Fill = RedBrush;
+                            break;
+                    }
 
+            // right player
+            grid = _game.Players[1].GetTerritory(_showBotsShips || (_game.Players[1].Name == _humanPlayer.Name));
+            for (int y = 0; y < 10; y++)
+                for (int x = 0; x < 10; x++)
+                    switch (grid[x, y])
+                    {
+                        case 0:
+                            _rightMainGrid[x, y].Fill = BlackBrush;
+                            break;
+                        case 1:
+                            _rightMainGrid[x, y].Fill = BlueBrush;
+                            break;
+                        case 2:
+                            _rightMainGrid[x, y].Fill = LimeBrush;
+                            break;
+                        case 3:
+                            _rightMainGrid[x, y].Fill = RedBrush;
+                            break;
+                    }
         }
 
         private void _timer_Tick(object sender, EventArgs e)
@@ -233,6 +274,7 @@ namespace BattleShip
 
         private void InitGame(object sender, EventArgs e)
         {
+
             // init timer
             _secondsElapsed = 0;
             _timer = new DispatcherTimer();
@@ -240,17 +282,37 @@ namespace BattleShip
             _timer.Tick += _timer_Tick;
             _timer.Start();
 
-            UpdateStats();
+            _showBotsShips = false;
+
+            //UpdateStats();
+            //DrawMainGrids();
+            Update(null, null);
         }
 
         private void Update(object sender, EventArgs e)
         {
+            // update ui
             UpdateStats();
+            DrawMainGrids();
+
+            // game loop
+            if(_game.GetCurrentPlayer().Name == _humanPlayer.Name)
+            {
+                // enable interaction
+                _canInteract = true;
+            } else
+            {
+                // the bot's turn
+                _canInteract = false;
+                _game.Next();
+            }
         }
 
         private void GameOver(object sender, EventArgs e)
         {
             _timer.Stop();
+
+
         }
 
         /*private void LeftMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -261,6 +323,21 @@ namespace BattleShip
         private void MainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Logger.Log($"you clicked {((Grid)((Rectangle)sender).Parent).Name}");
+            var pos = new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender));
+
+            if (_canInteract && (_game.GetTheOtherPlayer().GetTerritory()[pos.X, pos.Y] == 0))
+            {
+                _game.GetCurrentPlayer().AimAt(pos);
+                _game.Next();
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.P)
+            {
+                _showBotsShips = !_showBotsShips;
+            }
         }
     }
 }

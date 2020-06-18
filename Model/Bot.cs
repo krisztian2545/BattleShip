@@ -54,7 +54,7 @@ namespace Model
             return newShips;
         }
 
-        public void AutoAim(int[,] territory)
+        public void AutoAim(int[,] territory) // BUG: wont go vertical after no horizontal hit
         {
             Logger.Log("Auto aiming...");
 
@@ -148,9 +148,9 @@ namespace Model
                 _unresolvedShots.Add(temp);
         }
 
-        public override void OnShipDestroyed(int[,] territory, Vector target)
+        public override void OnShipDestroyed(Ship ship)
         {
-            base.OnShipDestroyed(territory, target);
+            base.OnShipDestroyed(ship);
             _firstHit = true;
             //_unresolvedShots.Clear();
         }

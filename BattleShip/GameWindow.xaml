@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BattleShip"
         mc:Ignorable="d"
-        Title="GameWindow" Height="700" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="1398">
+        Title="GameWindow" Height="700" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Width="1398" KeyDown="Window_KeyDown">
     <StackPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch">
         <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Left">
             <StackPanel Width="200" HorizontalAlignment="Left">
