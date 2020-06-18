@@ -74,6 +74,7 @@ namespace BattleShip
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            Keyboard.Focus(Gridd);
             Logger.Log("dragging true...");
             _dragging = true;
             var pos = new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender));
@@ -92,7 +93,7 @@ namespace BattleShip
             Logger.Log("Ship not found!!!");
             _draggedShip = null;
 
-            Keyboard.Focus(Gridd);
+            
         }
 
         private void Rectangle_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -11,7 +11,7 @@ namespace Model
         public Player Winner { get; private set; }
 
         public event EventHandler OnInitGame;
-        public event EventHandler OnChange;
+        public event EventHandler<GameOverEventArgs> OnChange;
         public event EventHandler OnGameOver;
 
         public Game(Player player1, Player player2)
@@ -36,24 +36,25 @@ namespace Model
             Logger.Log($"End of {GetCurrentPlayer().Name}'s turn.");
             _turn++;
 
-            OnChange?.Invoke(this, EventArgs.Empty);
-            CheckGameOver();
+            OnChange?.Invoke(this, new GameOverEventArgs(CheckGameOver()));
         }
 
-        public void CheckGameOver()
+        public bool CheckGameOver()
         {
             Logger.Log("Checking if the game is over...");
             foreach (Ship ship in GetCurrentPlayer()._myShips)
                 if (!ship.IsDestroyed())
-                    return;
+                    return false;
 
             Winner = GetTheOtherPlayer();
             GameOver();
+
+            return true;
         }
 
         public void GameOver()
         {
-            Logger.Log("GAME OVER!");
+            Logger.Log("-------------------------------------- GAME OVER! --------------------------------------");
             Logger.Log($"The winner is {Winner.Name}");
             OnGameOver?.Invoke(this, EventArgs.Empty);
         }

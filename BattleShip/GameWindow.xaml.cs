@@ -286,26 +286,31 @@ namespace BattleShip
 
             //UpdateStats();
             //DrawMainGrids();
-            Update(null, null);
+            Update(null, new GameOverEventArgs(false));
         }
 
-        private void Update(object sender, EventArgs e)
+        private void Update(object sender, GameOverEventArgs e)
         {
             // update ui
             UpdateStats();
             DrawMainGrids();
 
             // game loop
-            if(_game.GetCurrentPlayer().Name == _humanPlayer.Name)
+            if(!e.IsGameOver)
             {
-                // enable interaction
-                _canInteract = true;
-            } else
-            {
-                // the bot's turn
-                _canInteract = false;
-                _game.Next();
+                if (_game.GetCurrentPlayer().Name == _humanPlayer.Name)
+                {
+                    // enable interaction
+                    _canInteract = true;
+                }
+                else
+                {
+                    // the bot's turn
+                    _canInteract = false;
+                    _game.Next();
+                }
             }
+            
         }
 
         private void GameOver(object sender, EventArgs e)

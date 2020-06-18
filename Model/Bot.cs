@@ -76,7 +76,7 @@ namespace Model
                         if (territory[lastHit.X + 1, lastHit.Y] == 0)
                         {
                             AimAt(new Vector(lastHit.X + 1, lastHit.Y));
-                            _firstHit = false;
+                            //_firstHit = false;
                             return;
                         }
                     }
@@ -86,7 +86,7 @@ namespace Model
                         if (territory[lastHit.X - 1, lastHit.Y] == 0)
                         {
                             AimAt(new Vector(lastHit.X - 1, lastHit.Y));
-                            _firstHit = false;
+                            //_firstHit = false;
                             return;
                         }
                     }
@@ -100,7 +100,7 @@ namespace Model
                         if (territory[lastHit.X, lastHit.Y + 1] == 0)
                         {
                             AimAt(new Vector(lastHit.X, lastHit.Y + 1));
-                            _firstHit = false;
+                            //_firstHit = false;
                             return;
                         }
                     }
@@ -110,7 +110,7 @@ namespace Model
                         if (territory[lastHit.X, lastHit.Y - 1] == 0)
                         {
                             AimAt(new Vector(lastHit.X, lastHit.Y - 1));
-                            _firstHit = false;
+                            //_firstHit = false;
                             return;
                         }
                     }
@@ -145,7 +145,11 @@ namespace Model
             base.Shoot(enemy);
 
             if (enemy.GetTerritory()[temp.X, temp.Y] == 3)
+            {
                 _unresolvedShots.Add(temp);
+                if (_unresolvedShots.Count > 1)
+                    _firstHit = false;
+            }
         }
 
         public override void OnShipDestroyed(Ship ship)

@@ -152,6 +152,10 @@ namespace Model
                 {
                     Logger.Log($"The v coord is: {v.ToString()}");
                     Vector temp = current + v;
+
+                    if ((temp.X < 0) || (temp.X > 9) || (temp.Y < 0) || (temp.Y > 9))
+                        continue;
+
                     if (_myTerritory[temp.X, temp.Y] == 0)
                     {
                         Logger.Log($"Marking {temp.ToString()} as miss...");
