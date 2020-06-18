@@ -207,9 +207,12 @@ namespace BattleShip
             Ship[] ships = _game.Players[0]._myShips;
             for(int i = 0; i < 5; i++)
             {
-                for(int j = 0; j < ships[i].Length; j++)
+                if((_game.Players[0].Name == _humanPlayer.Name) || ships[i].IsDestroyed())
                 {
-                    _leftSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
+                    for (int j = 0; j < ships[i].Length; j++)
+                    {
+                        _leftSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
+                    }
                 }
             }
 
@@ -217,9 +220,12 @@ namespace BattleShip
             ships = _game.Players[1]._myShips;
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < ships[i].Length; j++)
+                if ((_game.Players[1].Name == _humanPlayer.Name) || ships[i].IsDestroyed())
                 {
-                    _rightSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
+                    for (int j = 0; j < ships[i].Length; j++)
+                    {
+                        _rightSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
+                    }
                 }
             }
         }
@@ -306,7 +312,6 @@ namespace BattleShip
                 else
                 {
                     // the bot's turn
-                    _canInteract = false;
                     _game.Next();
                 }
             }
@@ -332,6 +337,7 @@ namespace BattleShip
 
             if (_canInteract && (_game.GetTheOtherPlayer().GetTerritory()[pos.X, pos.Y] == 0))
             {
+                _canInteract = false;
                 _game.GetCurrentPlayer().AimAt(pos);
                 _game.Next();
             }
