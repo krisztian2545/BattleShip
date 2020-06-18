@@ -11,12 +11,14 @@ namespace Model
         private static readonly Random _random = new Random();
         private bool _targetProbablyHorizontal; // reset to true on destroyed ship;
         private bool _firstHit;
+        private bool _targetShipDestroyed = false;
         private List<Vector> _unresolvedShots;
 
         public Bot(string name) : base($"Bot {name}", GenerateShips())
         {
             _targetProbablyHorizontal = true;
             _firstHit = true;
+            _targetShipDestroyed = false;
             _unresolvedShots = new List<Vector>();
         }
 
@@ -57,12 +59,20 @@ namespace Model
         public void AutoAim(int[,] territory) // BUG: wont go vertical after no horizontal hit
         {
             Logger.Log("Auto aiming...");
+            Logger.Log($"Number of unresolved shots: {_unresolvedShots.Count}");
+            Logger.Log($"firstHit = {_firstHit}");
 
-            if(_unresolvedShots.Count == 0)
+            if (_unresolvedShots.Count == 0)
             {
                 //random shot
                 Logger.Log("Aiming at random location.");
-                AimAt(new Vector(_random.Next(10), _random.Next(10)));
+                Vector pos;
+                do
+                {
+                    pos = new Vector(_random.Next(10), _random.Next(10));
+                } while (territory[pos.X, pos.Y] > 0);
+
+                AimAt(pos);
                 return;
             } else
             {
@@ -119,11 +129,13 @@ namespace Model
                 
                 if (_firstHit)
                 {
+                    Logger.Log("Changing targetProbablyHorizontal...");
                     _targetProbablyHorizontal = !_targetProbablyHorizontal;
                     _firstHit = false;
                 }
                 else
                 {
+                    Logger.Log("Removing last hit from unresolved shots.");
                     _unresolvedShots.Remove(lastHit);
                 }
 
@@ -144,19 +156,32 @@ namespace Model
             Vector temp = TargetCoordinates;
             base.Shoot(enemy);
 
+            if(_targetShipDestroyed)
+            {
+                Logger.Log("targetShipDestroyed = true");
+                _firstHit = true;
+                _targetShipDestroyed = false;
+                return;
+            }
+
             if (enemy.GetTerritory()[temp.X, temp.Y] == 3)
             {
                 _unresolvedShots.Add(temp);
                 if (_unresolvedShots.Count > 1)
+                {
                     _firstHit = false;
+                    Logger.Log("firstHit = false; because second hit is made.");
+                }
             }
         }
 
-        public override void OnShipDestroyed(Ship ship)
+        public override void OnEnemyShipDestroyed()
         {
-            base.OnShipDestroyed(ship);
-            _firstHit = true;
-            //_unresolvedShots.Clear();
+            base.OnEnemyShipDestroyed();
+            //_firstHit = true;
+            //Logger.Log("now firstHit = true");
+            _unresolvedShots.Clear();
+            _targetShipDestroyed = true;
         }
 
     }

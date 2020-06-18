@@ -66,7 +66,7 @@ namespace Model
                 //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
                 if (feedback[1])
-                    Logger.Log("Destroyed!");
+                    OnEnemyShipDestroyed();
                 //    OnShipDestroyed(_enenmyTerritory, TargetCoordinates);
             } else
             {
@@ -104,12 +104,12 @@ namespace Model
 
             _myTerritory[coordinate.X, coordinate.Y] = hit[0] ? 3 : 1;
             if (hit[1])
-                OnShipDestroyed(hitShip);
+                OnMyShipDestroyed(hitShip);
 
             return hit;
         }
 
-        public virtual void OnShipDestroyed(/*int[,] territory, Vector target, */Ship ship)
+        public virtual void OnMyShipDestroyed(/*int[,] territory, Vector target, */Ship ship)
         {
             /*Logger.Log("On ship destroyed...");
 
@@ -166,7 +166,10 @@ namespace Model
 
         }
 
-
+        public virtual void OnEnemyShipDestroyed()
+        {
+            Logger.Log("Destroyed!");
+        }
 
 
         public int[,] GetTerritory(bool showHidden = false)
