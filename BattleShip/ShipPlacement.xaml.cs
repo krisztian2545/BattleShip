@@ -56,6 +56,11 @@ namespace BattleShip
             DrawShips();
         }
 
+        public ShipPlacement(string playerName) : this()
+        {
+            NameBox.Text = playerName;
+        }
+
         private void DrawShips()
         {
             SolidColorBrush LimeBrush = new SolidColorBrush(Colors.Lime);

@@ -41,13 +41,18 @@ namespace BattleShip
         SolidColorBrush BlueBrush = new SolidColorBrush(Color.FromRgb(0, 0, 100)); // missed shot
         SolidColorBrush RedBrush = new SolidColorBrush(Color.FromRgb(100, 0, 0)); // hit
 
-        public GameWindow()
+        public GameWindow() : this("")
+        {
+            
+        }
+
+        public GameWindow(string playerName)
         {
             InitializeComponent();
-            
+
             Logger.Log("Game window init...");
 
-            ShipPlacement window = new ShipPlacement();
+            ShipPlacement window = new ShipPlacement(playerName);
             window.Show();
             window.Closed += InitData;
         }
@@ -160,6 +165,13 @@ namespace BattleShip
                     _rightMainGrid[j, i] = rect;
                     RightMainGrid.Children.Add(rect);
                 }
+
+            this.DataContext = this;
+            this.CommandBindings.Add(new CommandBinding(ApplicationCommands.Open,
+                OnKeybindingPressed,
+                (sender, e) => { e.CanExecute = true; } ));
+
+            this.InputBindings.Add(new KeyBinding(ApplicationCommands.Open, new KeyGesture(Key.P, ModifierKeys.Control)));
 
             this.Show();
             _game.InitGame();
@@ -322,18 +334,20 @@ namespace BattleShip
         {
             _timer.Stop();
 
-            if (_game.Players[0].Name == _game.Winner.Name)
-            {
-                // left player's turn
-                LeftInformativeLabel.Content = "You won!";
-                RightInformative_Label.Content = "You lose.";
-            }
-            else
-            {
-                // right player's turn
-                LeftInformativeLabel.Content = "You lose.";
-                RightInformative_Label.Content = "You won!";
-            }
+            string winnerMessage = $"The winner is: {_game.Winner.Name}";
+            LeftInformativeLabel.Content = winnerMessage;
+            RightInformative_Label.Content = winnerMessage;
+
+            // show high scores window
+            var window = new HighScores( new Summary(_game.Winner.Name, _game.GetCurrentPlayer().Name) );
+            window.Show();
+            window.Closed += CloseWindow;
+            // if the highscores window is closed, go back to main menu
+        }
+
+        private void CloseWindow(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         /*private void LeftMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -354,12 +368,19 @@ namespace BattleShip
             }
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        /*private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.P)
+            if((e.Key == Key.P) && _canInteract)
             {
-                _showBotsShips = !_showBotsShips;
+
+
             }
+        }*/
+
+        public void OnKeybindingPressed(object sender, ExecutedRoutedEventArgs e)
+        {
+            _showBotsShips = !_showBotsShips;
+            Update(null, new GameOverEventArgs(true));
         }
     }
 }
