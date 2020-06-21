@@ -23,9 +23,9 @@ namespace BattleShip
     public partial class GameWindow : Window
     {
         private Game _game;
-        private Player _humanPlayer;
         private DispatcherTimer _timer;
         private long _secondsElapsed = 0;
+        private int _humanPlayerIndex;
 
         private bool _showBotsShips;
         private bool _canInteract;
@@ -62,12 +62,13 @@ namespace BattleShip
             // init players
             Player[] _players = new Player[2];
             _players[0] = new Bot("Enigma");
-            _humanPlayer = ((ShipPlacement)sender).GetInitializedPlayer();
-            _players[1] = _humanPlayer;
+            _players[1] = ((ShipPlacement)sender).GetInitializedPlayer();
 
             // random player starts
             int index = ((new Random()).NextDouble() >= 0.5) ? 1 : 0;
             _game = new Game(_players[index], _players[1-index]);
+
+            _humanPlayerIndex = _game.Players[0].Name == _players[1].Name ? 0 : 1;
 
             // adding events
             _game.OnInitGame += InitGame;
@@ -75,8 +76,8 @@ namespace BattleShip
             _game.OnGameOver += GameOver;
 
             // init name labels
-            LeftName.Content = $"{_players[index].Name}'s fleet:";
-            RightName.Content = $"{_players[1-index].Name}'s fleet:";
+            LeftName.Content = $"{_players[1].Name}'s fleet:";
+            RightName.Content = $"{_players[0].Name}'s fleet:";
 
             TimeLabel.Content = $"Time:\n{TimeSpan.FromSeconds(_secondsElapsed++)}";
 
@@ -147,8 +148,6 @@ namespace BattleShip
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle rect = NewCustomRect(j, i, BlackBrush);
-                    if(_humanPlayer.Name != _game.Players[0].Name)
-                        rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
 
                     _leftMainGrid[j, i] = rect;
                     LeftMainGrid.Children.Add(rect);
@@ -159,8 +158,7 @@ namespace BattleShip
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle rect = NewCustomRect(j, i, BlackBrush);
-                    if (_humanPlayer.Name != _game.Players[1].Name)
-                        rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
+                    rect.MouseLeftButtonDown += MainGridRect_MouseLeftButtonDown;
 
                     _rightMainGrid[j, i] = rect;
                     RightMainGrid.Children.Add(rect);
@@ -177,7 +175,12 @@ namespace BattleShip
             _game.InitGame();
         }
 
-        
+
+        public void OnKeybindingPressed(object sender, ExecutedRoutedEventArgs e)
+        {
+            _showBotsShips = !_showBotsShips;
+            Update(null, new GameOverEventArgs(true));
+        }
 
         private Rectangle NewCustomRect(int x, int y, SolidColorBrush brush)
         {
@@ -200,7 +203,7 @@ namespace BattleShip
             DrawSideShips();
 
             // update informational labels
-            if(_game.Players[0].Name == _game.GetCurrentPlayer().Name)
+            if(_game.Players[_humanPlayerIndex].Name == _game.GetCurrentPlayer().Name)
             {
                 // left player's turn
                 LeftInformativeLabel.Content = "Your turn!";
@@ -216,23 +219,20 @@ namespace BattleShip
         private void DrawSideShips()
         {
             // left player
-            Ship[] ships = _game.Players[0]._myShips;
+            Ship[] ships = _game.Players[_humanPlayerIndex]._myShips;
             for(int i = 0; i < 5; i++)
             {
-                if((_game.Players[0].Name == _humanPlayer.Name) || ships[i].IsDestroyed())
+                for (int j = 0; j < ships[i].Length; j++)
                 {
-                    for (int j = 0; j < ships[i].Length; j++)
-                    {
-                        _leftSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
-                    }
+                    _leftSideShips[i][j].Fill = ships[i].Hits[j] ? RedBrush : LimeBrush;
                 }
             }
 
             // right player
-            ships = _game.Players[1]._myShips;
+            ships = _game.Players[1 - _humanPlayerIndex]._myShips;
             for (int i = 0; i < 5; i++)
             {
-                if ((_game.Players[1].Name == _humanPlayer.Name) || ships[i].IsDestroyed())
+                if (_showBotsShips || ships[i].IsDestroyed())
                 {
                     for (int j = 0; j < ships[i].Length; j++)
                     {
@@ -245,7 +245,7 @@ namespace BattleShip
         private void DrawMainGrids()
         {
             // left player
-            var grid = _game.Players[0].GetTerritory(_showBotsShips || (_game.Players[0].Name == _humanPlayer.Name));
+            var grid = _game.Players[_humanPlayerIndex].GetTerritory(true);
             for(int y = 0; y < 10; y++)
                 for(int x = 0; x < 10; x++)
                     switch(grid[x, y])
@@ -265,7 +265,7 @@ namespace BattleShip
                     }
 
             // right player
-            grid = _game.Players[1].GetTerritory(_showBotsShips || (_game.Players[1].Name == _humanPlayer.Name));
+            grid = _game.Players[1 - _humanPlayerIndex].GetTerritory(_showBotsShips);
             for (int y = 0; y < 10; y++)
                 for (int x = 0; x < 10; x++)
                     switch (grid[x, y])
@@ -316,7 +316,7 @@ namespace BattleShip
             // game loop
             if(!e.IsGameOver)
             {
-                if (_game.GetCurrentPlayer().Name == _humanPlayer.Name)
+                if (_game.GetCurrentPlayer().Name == _game.Players[_humanPlayerIndex].Name)
                 {
                     // enable interaction
                     _canInteract = true;
@@ -350,11 +350,6 @@ namespace BattleShip
             this.Close();
         }
 
-        /*private void LeftMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }*/
-
         private void MainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Logger.Log($"you clicked {((Grid)((Rectangle)sender).Parent).Name}");
@@ -368,19 +363,5 @@ namespace BattleShip
             }
         }
 
-        /*private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if((e.Key == Key.P) && _canInteract)
-            {
-
-
-            }
-        }*/
-
-        public void OnKeybindingPressed(object sender, ExecutedRoutedEventArgs e)
-        {
-            _showBotsShips = !_showBotsShips;
-            Update(null, new GameOverEventArgs(true));
-        }
     }
 }
