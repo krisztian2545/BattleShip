@@ -23,6 +23,11 @@ namespace BattleShip
         private List<Summary> _highscores;
         private const string _filePath = "save.json";
 
+        public HighScores() : this(null)
+        {
+
+        }
+
         public HighScores(Summary summ)
         {
             InitializeComponent();
@@ -31,6 +36,7 @@ namespace BattleShip
                 SaveNewData(summ);
 
             LoadHighScores();
+            _highscores.Reverse();
             dataGrid.ItemsSource = _highscores;
         }
 
@@ -56,8 +62,6 @@ namespace BattleShip
                     json = r.ReadLine();
                 }
             }
-
-            Logger.Log($"number of list items: {_highscores.Count}");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

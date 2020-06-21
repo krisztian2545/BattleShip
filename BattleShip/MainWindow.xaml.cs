@@ -30,20 +30,23 @@ namespace BattleShip
         {
             // start a player vs computer game
             var window = new GameWindow();
-            App.Current.MainWindow = window;
+            //App.Current.MainWindow = window;
             this.Close();
         }
 
         private void Player_Click(object sender, RoutedEventArgs e)
         {
             // start a player vs player game
-
+            var window = new PVPGameWindow();
+            this.Close();
         }
 
         private void Highscores_Click(object sender, RoutedEventArgs e)
         {
             // show the highscores window
-
+            var window = new HighScores();
+            window.Show();
+            this.Close();
         }
     }
 }
