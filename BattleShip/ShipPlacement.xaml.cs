@@ -24,16 +24,18 @@ namespace BattleShip
         private bool _dragging;
         private Ship[] _ships;
         private Ship _draggedShip;
+        private int _draggedShipIndex;
         private Model.Data.Vector _lastPosition;
         private Model.Data.Vector _difference;
         private bool _lastIsHorizontal;
-        private bool _shipsCollide;
+        private bool[] _shipsCollide;
 
         public ShipPlacement()
         {
             InitializeComponent();
 
             _dragging = false;
+            _draggedShipIndex = -1;
             _grid = new Rectangle[10, 10];
             for (int i = 0; i < 10; i++)
                 for (int j = 0; j < 10; j++)
@@ -53,7 +55,7 @@ namespace BattleShip
 
             // initialize ships
             _ships = Bot.GenerateShips();
-            _shipsCollide = false;
+            _shipsCollide = new bool[5];
 
             DrawShips();
         }
@@ -80,9 +82,10 @@ namespace BattleShip
                     _grid[v.X, v.Y].Fill = LimeBrush;
 
             // highlight badly placed ship
-            if(_shipsCollide)
-                foreach (Model.Data.Vector v in _draggedShip.Coordinates)
-                    _grid[v.X, v.Y].Fill = RedBrush;
+            for(int i = 0; i < 5; i++)
+                if(_shipsCollide[i])
+                    foreach (Model.Data.Vector v in _ships[i].Coordinates)
+                        _grid[v.X, v.Y].Fill = RedBrush;
         }
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -94,14 +97,15 @@ namespace BattleShip
             _dragging = true;
             var pos = new Model.Data.Vector(Grid.GetColumn((Rectangle)sender), Grid.GetRow((Rectangle)sender));
 
-            foreach (Ship ship in _ships)
-                foreach (Model.Data.Vector v in ship.Coordinates)
+            for (int i = 0; i < 5; i++)
+                foreach (Model.Data.Vector v in _ships[i].Coordinates)
                     if(v == pos)
                     {
-                        _draggedShip = ship;
+                        _draggedShip = _ships[i];
+                        _draggedShipIndex = i;
                         _lastPosition = pos;
-                        _difference = ship.Coordinates[0] - pos;
-                        _lastIsHorizontal = ship.IsHorizontal;
+                        _difference = _ships[i].Coordinates[0] - pos;
+                        _lastIsHorizontal = _ships[i].IsHorizontal;
                         return;
                     }
 
@@ -158,10 +162,10 @@ namespace BattleShip
             // if collide then make them red
             if(CollisionDetection(_draggedShip))
             {
-                _shipsCollide = true;
+                _shipsCollide[_draggedShipIndex] = true;
             } else
             {
-                _shipsCollide = false;
+                _shipsCollide[_draggedShipIndex] = false;
             }
 
             _lastIsHorizontal = _draggedShip.IsHorizontal;
@@ -203,11 +207,12 @@ namespace BattleShip
                 return;
             }
 
-            if(_shipsCollide)
-            {
-                TopLabel.Content = "Ships should not collide or be too close to each other!";
-                return;
-            }
+            foreach(bool b in _shipsCollide)
+                if(b)
+                {
+                    TopLabel.Content = "Ships should not collide or be too close to each other!";
+                    return;
+                }
 
             this.Close();
         }
