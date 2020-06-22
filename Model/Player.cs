@@ -111,37 +111,8 @@ namespace Model
             return hit;
         }
 
-        public virtual void OnMyShipDestroyed(/*int[,] territory, Vector target, */Ship ship)
+        public virtual void OnMyShipDestroyed(Ship ship)
         {
-            /*Logger.Log("On ship destroyed...");
-
-            Vector[] sideCoords = new Vector[] { Vector.Up, new Vector(1, -1), Vector.Right, new Vector(1, 1), Vector.Down, new Vector(-1, 1), Vector.Left, new Vector(-1, -1) };
-            List<Vector> l = new List<Vector>();
-            l.Add(target);
-
-            do
-            {
-                Vector current = l[0];
-                Logger.Log($"The current coord is: {current.ToString()}");
-                foreach(Vector v in sideCoords)
-                {
-                    Logger.Log($"The v coord is: {v.ToString()}");
-                    Vector temp = current + v;
-                    if(territory[temp.X, temp.Y] == 3)
-                    {
-                        Logger.Log($"Adding {temp.ToString()} to l...");
-                        l.Add(temp);
-                    } else if (territory[temp.X, temp.Y] == 0)
-                    {
-                        Logger.Log($"Marking {temp.ToString()} as miss...");
-                        territory[temp.X, temp.Y] = 1;
-                    }
-                }
-
-                Logger.Log($"l.Count before remove: {l.Count}");
-                l.Remove(current);
-                Logger.Log($"l.Count after remove: {l.Count}");
-            } while (l.Count > 0);*/
 
             Logger.Log("On ship destroyed...");
 
