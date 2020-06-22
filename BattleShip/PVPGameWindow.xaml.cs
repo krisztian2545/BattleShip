@@ -83,8 +83,8 @@ namespace BattleShip
             _game.OnGameOver += GameOver;
 
             // init name labels
-            LeftName.Content = $"{_players[index].Name}'s fleet:";
-            RightName.Content = $"{_players[1 - index].Name}'s fleet:";
+            LeftName.Content = $"{_players[index].Name}'s \nfleet:";
+            RightName.Content = $"{_players[1 - index].Name}'s \nfleet:";
 
             TimeLabel.Content = $"Time:\n{TimeSpan.FromSeconds(_secondsElapsed++)}";
 
@@ -296,8 +296,6 @@ namespace BattleShip
             _timer.Tick += _timer_Tick;
             _timer.Start();
 
-            //UpdateStats();
-            //DrawMainGrids();
             Update(null, new GameOverEventArgs(false));
         }
 
@@ -354,7 +352,8 @@ namespace BattleShip
                 _canRightPlayerInteract = false;
                 _game.GetCurrentPlayer().AimAt(pos);
                 _game.Next();
-            }
+            } else
+                RightInformative_Label.Content = "Shoot here!";
         }
 
         private void RightMainGridRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -367,7 +366,8 @@ namespace BattleShip
                 _canLeftPlayerInteract = false;
                 _game.GetCurrentPlayer().AimAt(pos);
                 _game.Next();
-            }
+            } else
+                LeftInformativeLabel.Content = "Shoot here!";
         }
 
     }

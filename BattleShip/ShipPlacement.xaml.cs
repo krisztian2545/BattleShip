@@ -41,7 +41,6 @@ namespace BattleShip
                     _grid[j, i] = new Rectangle();
                     _grid[j, i].Stroke = new SolidColorBrush(Colors.Lime);
                     _grid[j, i].Fill = new SolidColorBrush(Colors.Black);
-                    //_grid[j, i].StrokeThickness = 1;
                     _grid[j, i].MouseLeftButtonDown += Rectangle_MouseLeftButtonDown;
                     _grid[j, i].MouseLeftButtonUp += Rectangle_MouseLeftButtonUp;
                     _grid[j, i].MouseMove += Rectangle_MouseMove;
@@ -125,7 +124,6 @@ namespace BattleShip
         {
             Logger.Log("dragging false...");
             _dragging = false;
-            //_draggedShip = null;
         }
 
         private void Rectangle_MouseMove(object sender, MouseEventArgs e)
@@ -174,7 +172,6 @@ namespace BattleShip
         {
             Logger.Log("dragging false...");
             _dragging = false;
-            //_draggedShip = null;
         }
 
         private bool CollisionDetection(Ship ship)

@@ -17,7 +17,6 @@ namespace Model
          * 3 - hit
          */
         private int[,] _myTerritory;
-        public int[,] _enenmyTerritory { get; private set; }
         public Ship[] _myShips { get; private set; }
         public Vector TargetCoordinates { get; private set; }
         public int Hits { get; private set; }
@@ -29,7 +28,6 @@ namespace Model
         public Player(string name, Ship[] newShips)
         {
             Name = name;
-            _enenmyTerritory = new int[10, 10];
             _myTerritory = new int[10, 10];
             _myShips = newShips;
             PlaceMyShips();
@@ -65,15 +63,12 @@ namespace Model
             {
                 Logger.Log("Hit!");
                 Hits++;
-                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
                 if (feedback[1])
                     OnEnemyShipDestroyed();
-                //    OnShipDestroyed(_enenmyTerritory, TargetCoordinates);
             } else
             {
                 Logger.Log("Missed.");
-                //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 1;
             }
 
             TargetCoordinates = NO_TARGET;
@@ -81,15 +76,12 @@ namespace Model
 
         public void AimAt(Vector target)
         {
-            // do a check here or before this to dont shoot twice at a target
             TargetCoordinates = target;
             Logger.Log(Name + " is aiming at " + TargetCoordinates.ToString());
         }
 
         public bool[] IsHitAndSink(Vector coordinate)
         {
-            //bool hit = _myTerritory[coordinate.X, coordinate.Y] == 2;
-            //_myTerritory[coordinate.X, coordinate.Y] = hit ? 3 : 1;
             bool[] hit = new bool[] {false, false};
             Ship hitShip = null;
 
@@ -116,27 +108,17 @@ namespace Model
 
             Logger.Log("On ship destroyed...");
 
-            Vector[] sideCoords = new Vector[] { Vector.Up, new Vector(1, -1), Vector.Right, new Vector(1, 1), Vector.Down, new Vector(-1, 1), Vector.Left, new Vector(-1, -1) };
-            
-            foreach(Vector current in ship.Coordinates)
+            for (int y = ship.Coordinates[0].Y - 1; y <= ship.Coordinates[ship.Length - 1].Y + 1; y++)
             {
-                Logger.Log($"The current coord is: {current.ToString()}");
-                foreach (Vector v in sideCoords)
+                for (int x = ship.Coordinates[0].X - 1; x <= ship.Coordinates[ship.Length - 1].X + 1; x++)
                 {
-                    Logger.Log($"The v coord is: {v.ToString()}");
-                    Vector temp = current + v;
-
-                    if ((temp.X < 0) || (temp.X > 9) || (temp.Y < 0) || (temp.Y > 9))
-                        continue;
-
-                    if (_myTerritory[temp.X, temp.Y] == 0)
-                    {
-                        Logger.Log($"Marking {temp.ToString()} as miss...");
-                        _myTerritory[temp.X, temp.Y] = 1;
-                    }
+                    if ((x > -1) && (x < 10) && (y > -1) && (y < 10))
+                        _myTerritory[x, y] = 1;
                 }
             }
 
+            foreach (Vector pos in ship.Coordinates)
+                _myTerritory[pos.X, pos.Y] = 3;
         }
 
         public virtual void OnEnemyShipDestroyed()

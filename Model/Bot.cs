@@ -9,7 +9,7 @@ namespace Model
     {
 
         private static readonly Random _random = new Random();
-        private bool _targetProbablyHorizontal; // reset to true on destroyed ship;
+        private bool _targetProbablyHorizontal;
         private bool _firstHit;
         private bool _targetShipDestroyed = false;
         private List<Vector> _unresolvedShots;
@@ -34,6 +34,7 @@ namespace Model
 
                 newShips[i] = new Ship(_shipLengths[i]);
                 newShips[i].IsHorizontal = _random.NextDouble() >= 0.5;
+
                 if(newShips[i].IsHorizontal)
                     newShips[i].Replace(new Vector(_random.Next(10 - newShips[i].Length), _random.Next(10)));
                 else
@@ -46,7 +47,6 @@ namespace Model
                         again = true;
                         break;
                     }
-                        
                 }
                 if (!again)
                     i++;
@@ -56,7 +56,7 @@ namespace Model
             return newShips;
         }
 
-        public void AutoAim(int[,] territory) // BUG: wont go vertical after no horizontal hit
+        public void AutoAim(int[,] territory)
         {
             Logger.Log("Auto aiming...");
             Logger.Log($"Number of unresolved shots: {_unresolvedShots.Count}");
@@ -158,7 +158,7 @@ namespace Model
 
             if(_targetShipDestroyed)
             {
-                Logger.Log("targetShipDestroyed = true");
+                Logger.Log($"targetShipDestroyed = {_targetShipDestroyed}");
                 _firstHit = true;
                 _targetShipDestroyed = false;
                 return;
@@ -170,7 +170,7 @@ namespace Model
                 if (_unresolvedShots.Count > 1)
                 {
                     _firstHit = false;
-                    Logger.Log("firstHit = false; because second hit is made.");
+                    Logger.Log($"firstHit = {_firstHit}; because second hit is made.");
                 }
             }
         }
@@ -178,8 +178,6 @@ namespace Model
         public override void OnEnemyShipDestroyed()
         {
             base.OnEnemyShipDestroyed();
-            //_firstHit = true;
-            //Logger.Log("now firstHit = true");
             _unresolvedShots.Clear();
             _targetShipDestroyed = true;
         }

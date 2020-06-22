@@ -30,7 +30,6 @@ namespace BattleShip
         {
             // start a player vs computer game
             var window = new GameWindow();
-            //App.Current.MainWindow = window;
             this.Close();
         }
 

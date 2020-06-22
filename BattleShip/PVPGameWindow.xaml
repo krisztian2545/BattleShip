@@ -10,7 +10,7 @@
     <StackPanel Orientation="Horizontal" Background="Black" HorizontalAlignment="Stretch">
         <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Left">
             <StackPanel Width="200" HorizontalAlignment="Left">
-                <Label x:Name="LeftName" Style="{StaticResource LabelStyle1}" FontSize="22" Height="80">
+                <Label x:Name="LeftName" Style="{StaticResource LabelStyle1}" FontSize="30" Height="90">
                 </Label>
                 <Grid x:Name="LeftGrid1" Height="30" Width="60" HorizontalAlignment="Left" Margin="25,80,0,0">
                     <Grid.ColumnDefinitions>
@@ -168,7 +168,7 @@
 
         <Border BorderBrush="Lime" BorderThickness="1" HorizontalAlignment="Right">
             <StackPanel Width="200"  HorizontalAlignment="Right">
-                <Label x:Name="RightName" Style="{StaticResource LabelStyle1}" FontSize="22" Height="80">
+                <Label x:Name="RightName" Style="{StaticResource LabelStyle1}" FontSize="30" Height="90">
                 </Label>
                 <Grid x:Name="RightGrid1" Height="30" Width="60" HorizontalAlignment="Right" Margin="25,80,25,0">
                     <Grid.ColumnDefinitions>

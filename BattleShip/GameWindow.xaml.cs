@@ -76,8 +76,8 @@ namespace BattleShip
             _game.OnGameOver += GameOver;
 
             // init name labels
-            LeftName.Content = $"{_players[1].Name}'s fleet:";
-            RightName.Content = $"{_players[0].Name}'s fleet:";
+            LeftName.Content = $"{_players[1].Name}'s \nfleet:";
+            RightName.Content = $"{_players[0].Name}'s \nfleet:";
 
             TimeLabel.Content = $"Time:\n{TimeSpan.FromSeconds(_secondsElapsed++)}";
 
@@ -306,8 +306,6 @@ namespace BattleShip
 
             _showBotsShips = false;
 
-            //UpdateStats();
-            //DrawMainGrids();
             Update(null, new GameOverEventArgs(false));
         }
 

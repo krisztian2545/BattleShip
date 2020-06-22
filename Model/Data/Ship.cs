@@ -81,8 +81,6 @@ namespace Model.Data
 
         public static bool CollisionDetection(Ship s1, Ship s2)
         {
-            //s1 = new Ship(s1);
-            //s2 = new Ship(s2);
 
             if ((s1.Coordinates[0].X <= s2.Coordinates[s2.Length - 1].X +1) && (s1.Coordinates[s1.Length - 1].X >= s2.Coordinates[0].X -1) && // horizontally collides
                 (s1.Coordinates[0].Y <= s2.Coordinates[s2.Length - 1].Y +1) && (s1.Coordinates[s1.Length - 1].Y >= s2.Coordinates[0].Y -1)) // vertically collides

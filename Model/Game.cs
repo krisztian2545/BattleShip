@@ -50,7 +50,6 @@ namespace Model
                     return false;
 
             Winner = GetTheOtherPlayer();
-            //GameOver();
 
             return true;
         }
