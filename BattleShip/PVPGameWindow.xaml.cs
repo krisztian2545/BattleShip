@@ -22,7 +22,6 @@ namespace BattleShip
     {
 
         private Game _game;
-        private Player _humanPlayer;
         private Player[] _players;
         private DispatcherTimer _timer;
         private long _secondsElapsed = 0;
@@ -196,6 +195,10 @@ namespace BattleShip
 
             // update side ships
             DrawSideShips();
+
+            // update hits
+            LeftHits.Content = $"Hits: {_game.Players[0].Hits}";
+            RightHits.Content = $"Hits: {_game.Players[1].Hits}";
 
             // update informational labels
             if (_game.Players[0].Name == _game.GetCurrentPlayer().Name)

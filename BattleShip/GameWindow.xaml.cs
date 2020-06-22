@@ -202,8 +202,12 @@ namespace BattleShip
             // update side ships
             DrawSideShips();
 
+            // update hits
+            LeftHits.Content = $"Hits: {_game.Players[_humanPlayerIndex].Hits}";
+            RightHits.Content = $"Hits: {_game.Players[1 - _humanPlayerIndex].Hits}";
+
             // update informational labels
-            if(_game.Players[_humanPlayerIndex].Name == _game.GetCurrentPlayer().Name)
+            if (_game.Players[_humanPlayerIndex].Name == _game.GetCurrentPlayer().Name)
             {
                 // left player's turn
                 LeftInformativeLabel.Content = "Your turn!";
@@ -212,7 +216,7 @@ namespace BattleShip
             {
                 // right player's turn
                 LeftInformativeLabel.Content = "";
-                RightInformative_Label.Content = "Your turn!";
+                RightInformative_Label.Content = "Bot is thinking...";
             }
         }
 

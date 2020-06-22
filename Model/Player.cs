@@ -20,6 +20,7 @@ namespace Model
         public int[,] _enenmyTerritory { get; private set; }
         public Ship[] _myShips { get; private set; }
         public Vector TargetCoordinates { get; private set; }
+        public int Hits { get; private set; }
 
         public const int _numberOfShips = 5; // const is also static
         public static readonly int[] _shipLengths = new int[] { 2, 3, 3, 4, 5 };
@@ -33,7 +34,7 @@ namespace Model
             _myShips = newShips;
             PlaceMyShips();
             TargetCoordinates = NO_TARGET;
-
+            Hits = 0;
         }
 
         void PlaceMyShips()
@@ -63,6 +64,7 @@ namespace Model
             if(feedback[0])
             {
                 Logger.Log("Hit!");
+                Hits++;
                 //_enenmyTerritory[TargetCoordinates.X, TargetCoordinates.Y] = 3;
                 //check if destroyed
                 if (feedback[1])

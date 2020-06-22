@@ -12,7 +12,7 @@
             <StackPanel Width="200" HorizontalAlignment="Left">
                 <Label x:Name="LeftName" Style="{StaticResource LabelStyle1}" FontSize="22" Height="80">
                 </Label>
-                <Grid x:Name="LeftGrid1" Height="30" Width="60" HorizontalAlignment="Left" Margin="25,100,0,0">
+                <Grid x:Name="LeftGrid1" Height="30" Width="60" HorizontalAlignment="Left" Margin="25,80,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -49,6 +49,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
+                <Label x:Name="LeftHits" Style="{StaticResource LabelStyle1}" Content="Hits: " FontSize="36" Margin="0,50,0,0"/>
             </StackPanel>
         </Border>
 
@@ -169,7 +170,7 @@
             <StackPanel Width="200"  HorizontalAlignment="Right">
                 <Label x:Name="RightName" Style="{StaticResource LabelStyle1}" FontSize="22" Height="80">
                 </Label>
-                <Grid x:Name="RightGrid1" Height="30" Width="60" HorizontalAlignment="Right" Margin="25,100,25,0">
+                <Grid x:Name="RightGrid1" Height="30" Width="60" HorizontalAlignment="Right" Margin="25,80,25,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -206,6 +207,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                 </Grid>
+                <Label x:Name="RightHits" Style="{StaticResource LabelStyle1}" Content="Hits: " FontSize="36" Margin="0,50,0,0"/>
             </StackPanel>
         </Border>
     </StackPanel>
